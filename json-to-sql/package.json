@@ -1,0 +1,20 @@
+{
+  "name": "json_to_sql",
+  "version": "1.0.0",
+  "description": "Converts JSON data into SQL queries",
+  "main": "converter",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "node",
+    "json",
+    "sql"
+  ],
+  "author": "parthasarathy",
+  "license": "ISC",
+  "dependencies": {
+    "fs": "0.0.1-security",
+    "jsonfile": "^5.0.0"
+  }
+}
