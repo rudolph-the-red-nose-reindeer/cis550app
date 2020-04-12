@@ -32,13 +32,7 @@ function converter(input) {
   // exit if json or sql files are not specified
   if (!jsonFilename || !sqlFilename) return 'Error';
 
-  const tables = [];
-  var columns = [];
-  var columnTypes = [];
-  var columnInfo = [];
-  var values = [];
   const valueInserts = [];
-  const createTables = [];
 
   // use jsonfile module to read json file
   jsonfile.readFile(jsonFilename, (err, data) => {
@@ -47,7 +41,11 @@ function converter(input) {
     const source = data;
     fetchReviewerData(source);
     fetchReviewData(source);
+    fetchReviewerData(source);
+    fetchReviewData(source);
     fetchProductData(source);
+    fetchCategoriesData(source);
+    fetchRelatedData(source)
     const inserts = toSql(valueInserts);
     writeOutput(inserts)
   });
@@ -65,6 +63,57 @@ function converter(input) {
 
       const query = `INSERT INTO Product (asin, title, description, price, brand) 
       VALUES (${asin}, ${title}, ${description}, ${price}, ${brand})`;
+      valueInserts.push(query);
+    }
+  }
+
+  function fetchRelatedData(source) {
+    for (var i in source) {
+      let temp = source[i];
+      if (temp["reviewerID"]) break;
+      var asin = `"${temp["asin"]}"`;
+
+      if (temp["also_bought"]) alsoBoughtData(temp["also_bought"], asin)
+      if (temp["also_buy"]) alsoBoughtData(temp["also_buy"], asin)
+      if (temp["also_viewed"]) alsoViewedData(temp["also_viewed"], asin)
+      if (temp["also_view"]) alsoViewedData(temp["also_view"], asin)
+      if (temp["bought_together"]) boughtTogetherData(temp["bought_together"], asin)
+      if (temp["buy_after_viewing"]) buyAfterViewingData(temp["buy_after_viewing"], asin)
+    }
+  }
+
+  function alsoBoughtData(arr, asin) {
+    for (var product in arr) {
+      var bought_asin = `"${arr[product]}"`
+      const query = `INSERT INTO Related (asin, asinRelated, label) 
+          VALUES (${asin}, ${bought_asin}, "also bought")`;
+      valueInserts.push(query);
+    }
+  }
+
+  function alsoViewedData(arr, asin) {
+    for (var product in arr) {
+      var bought_asin = `"${arr[product]}"`
+      const query = `INSERT INTO Related (asin, asinRelated, label) 
+          VALUES (${asin}, ${bought_asin}, "also viewed")`;
+      valueInserts.push(query);
+    }
+  }
+
+  function boughtTogetherData(arr, asin) {
+    for (var product in arr) {
+      var bought_asin = `"${arr[product]}"`
+      const query = `INSERT INTO Related (asin, asinRelated, label) 
+          VALUES (${asin}, ${bought_asin}, "bought together")`;
+      valueInserts.push(query);
+    }
+  }
+
+  function buyAfterViewingData(arr, asin) {
+    for (var product in arr) {
+      var bought_asin = `"${arr[product]}"`
+      const query = `INSERT INTO Related (asin, asinRelated, label) 
+          VALUES (${asin}, ${bought_asin}, "buy after viewing")`;
       valueInserts.push(query);
     }
   }
@@ -91,9 +140,27 @@ function converter(input) {
       let reviewText = `${temp["reviewText"]}`;
       let newReviewText = cleanText(reviewText);
       let vote = temp["vote"] ? `"${temp["vote"]}"` : null;
-      const query = `INSERT INTO Review (reviewerID, asin, vote, reviewText, overall, summary, time, date) 
+      const query = `INSERT INTO Review (reviewerID, asin, vote, reviewText, overall, summary, time, reviewDate) 
       VALUES ("${temp["reviewerID"]}", "${temp["asin"]}", ${vote}, "${newReviewText}", ${temp["overall"]}, "${temp["summary"]}", ${temp["unixReviewTime"]}, "${temp["reviewTime"]}")`;
       valueInserts.push(query);
+    }
+  }
+
+  function fetchCategoriesData(source) {
+    for (var i in source) {
+      let temp = source[i];
+      if (temp["reviewerID"]) break;
+      var asin = `"${temp["asin"]}"`
+      if (temp["categories"]) {
+        for (var cat in temp["categories"]) {
+          const query = `INSERT INTO Category (category, asin) VALUES ("${cat}", ${asin})`;
+          valueInserts.push(query);
+        }
+      }
+      if (temp["main_cat"]) {
+        const query = `INSERT INTO Category (category, asin) VALUES ("${temp["main_cat"]}", ${asin})`;
+        valueInserts.push(query);
+      }
     }
   }
 
