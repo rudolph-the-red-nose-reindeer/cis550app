@@ -86,3 +86,7 @@ typings/
 
 # DynamoDB Local files
 .dynamodb/
+
+#Large json files
+json-to-sql/metadataexample.json
+json-to-sql/input.json

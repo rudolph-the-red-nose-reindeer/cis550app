@@ -47,13 +47,36 @@ function converter(input) {
     const source = data;
     fetchReviewerData(source);
     fetchReviewData(source);
+    fetchProductData(source);
     const inserts = toSql(valueInserts);
     writeOutput(inserts)
   });
 
+  function fetchProductData(source) {
+    for (var i in source) {
+      let temp = source[i];
+      if (temp["reviewerID"]) break;
+      var asin = `"${temp["asin"]}"`;
+      var title = temp["title"] ? `"${cleanText(temp["title"])}"` : null;
+      var tempDescription = temp["description"] ? fetchDescription(temp["description"]) : null;
+      var description = tempDescription ? `"${cleanText(tempDescription)}"` : null;
+      var price = temp["price"] ? temp["price"] : null;
+      var brand = temp["brand"] ? `"${cleanText(temp["brand"])}"` : null;
+
+      const query = `INSERT INTO Product (asin, title, description, price, brand) 
+      VALUES (${asin}, ${title}, ${description}, ${price}, ${brand})`;
+      valueInserts.push(query);
+    }
+  }
+
+  function fetchDescription(descriptionArray) {
+    return descriptionArray[0];
+  }
+
   function fetchReviewerData(source) {
     for (var i in source) {
       let temp = source[i];
+      if (!temp["reviewerID"]) break;
       //console.log("this is example obj: " + JSON.stringify(temp));
       const query = `INSERT INTO Reviewer (reviewerID, reviewerName) VALUES ("${temp["reviewerID"]}", "${temp["reviewerName"]}")`;
       valueInserts.push(query);
@@ -64,17 +87,19 @@ function converter(input) {
     for (var i in source) {
       let temp = source[i];
       //console.log("this is example obj: " + JSON.stringify(temp));
+      if (!temp["reviewerID"]) break;
       let reviewText = `${temp["reviewText"]}`;
-      let newReviewText = cleanReviewText(reviewText);
+      let newReviewText = cleanText(reviewText);
       let vote = temp["vote"] ? `"${temp["vote"]}"` : null;
       const query = `INSERT INTO Review (reviewerID, asin, vote, reviewText, overall, summary, time, date) 
-      VALUES ("${temp["reviewerID"]}", ${temp["asin"]}, ${vote}, "${newReviewText}", ${temp["overall"]}, "${temp["summary"]}", ${temp["unixReviewTime"]}, "${temp["reviewTime"]}")`;
+      VALUES ("${temp["reviewerID"]}", "${temp["asin"]}", ${vote}, "${newReviewText}", ${temp["overall"]}, "${temp["summary"]}", ${temp["unixReviewTime"]}, "${temp["reviewTime"]}")`;
       valueInserts.push(query);
     }
   }
 
-  function cleanReviewText(reviewText) {
-    let newReviewText1 = reviewText.slice(0, 255);
+  function cleanText(text) {
+    let newReviewText1 = text.slice(0, 255);
+    //console.log(newReviewText1);
     let rt = newReviewText1.replace(/"/g, "'");
     return rt;
   }
