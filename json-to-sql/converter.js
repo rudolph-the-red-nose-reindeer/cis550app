@@ -45,7 +45,7 @@ function converter(input) {
     fetchReviewData(source);
     fetchProductData(source);
     fetchCategoriesData(source);
-    fetchRelatedData(source)
+    //fetchRelatedData(source)
     const inserts = toSql(valueInserts);
     writeOutput(inserts)
   });
@@ -54,12 +54,12 @@ function converter(input) {
     for (var i in source) {
       let temp = source[i];
       if (temp["reviewerID"]) break;
-      var asin = `"${temp["asin"]}"`;
-      var title = temp["title"] ? `"${cleanText(temp["title"])}"` : null;
+      var asin = `'${temp["asin"]}'`;
+      var title = temp["title"] ? `${cleanText(temp["title"])}` : null;
       var tempDescription = temp["description"] ? fetchDescription(temp["description"]) : null;
-      var description = tempDescription ? `"${cleanText(tempDescription)}"` : null;
+      var description = tempDescription ? `${cleanText(tempDescription)}` : null;
       var price = temp["price"] ? temp["price"] : null;
-      var brand = temp["brand"] ? `"${cleanText(temp["brand"])}"` : null;
+      var brand = temp["brand"] ? `${cleanText(temp["brand"])}` : null;
 
       const query = `INSERT INTO Product (asin, title, description, price, brand) 
       VALUES (${asin}, ${title}, ${description}, ${price}, ${brand})`;
@@ -127,7 +127,7 @@ function converter(input) {
       let temp = source[i];
       if (!temp["reviewerID"]) break;
       //console.log("this is example obj: " + JSON.stringify(temp));
-      const query = `INSERT INTO Reviewer (reviewerID, reviewerName) VALUES ("${temp["reviewerID"]}", "${temp["reviewerName"]}")`;
+      const query = `INSERT INTO Reviewer (reviewerID, name) VALUES ('${temp["reviewerID"]}', '${temp["reviewerName"]}')`;
       valueInserts.push(query);
     }
   }
@@ -137,11 +137,14 @@ function converter(input) {
       let temp = source[i];
       //console.log("this is example obj: " + JSON.stringify(temp));
       if (!temp["reviewerID"]) break;
-      let reviewText = `${temp["reviewText"]}`;
-      let newReviewText = cleanText(reviewText);
-      let vote = temp["vote"] ? `"${temp["vote"]}"` : null;
+      let reviewText = temp["reviewText"];
+      let asin = temp["asin"] ? temp["asin"] : null;
+      let overall = temp["overall"] ? temp["overall"] : null;
+      let summary = temp["summary"] ? cleanText(temp["summary"]) : null;
+      let newReviewText = reviewText ? cleanText(reviewText) : null;
+      let vote = temp["vote"] ? `'${temp["vote"]}'` : null;
       const query = `INSERT INTO Review (reviewerID, asin, vote, reviewText, overall, summary, time, reviewDate) 
-      VALUES ("${temp["reviewerID"]}", "${temp["asin"]}", ${vote}, "${newReviewText}", ${temp["overall"]}, "${temp["summary"]}", ${temp["unixReviewTime"]}, "${temp["reviewTime"]}")`;
+      VALUES ('${temp["reviewerID"]}', '${asin}', ${vote}, ${newReviewText}, ${overall}, ${summary}, ${temp["unixReviewTime"]}, '${temp["reviewTime"]}')`;
       valueInserts.push(query);
     }
   }
@@ -150,15 +153,15 @@ function converter(input) {
     for (var i in source) {
       let temp = source[i];
       if (temp["reviewerID"]) break;
-      var asin = `"${temp["asin"]}"`
+      var asin = `'${temp["asin"]}'`
       if (temp["categories"]) {
         for (var cat in temp["categories"]) {
-          const query = `INSERT INTO Category (category, asin) VALUES ("${cat}", ${asin})`;
+          const query = `INSERT INTO Category (category, asin) VALUES ('${cat}', ${asin})`;
           valueInserts.push(query);
         }
       }
       if (temp["main_cat"]) {
-        const query = `INSERT INTO Category (category, asin) VALUES ("${temp["main_cat"]}", ${asin})`;
+        const query = `INSERT INTO Category (category, asin) VALUES ('${temp["main_cat"]}', ${asin})`;
         valueInserts.push(query);
       }
     }
@@ -167,8 +170,17 @@ function converter(input) {
   function cleanText(text) {
     let newReviewText1 = text.slice(0, 255);
     //console.log(newReviewText1);
-    let rt = newReviewText1.replace(/"/g, "'");
-    return rt;
+    let temp = JSON.stringify(newReviewText1);
+    let tempt = temp.replace(/'/g, "''");
+    //console.log(tempt);
+    let one = replaceAt(0, tempt, "'");
+    let two = replaceAt((one.length - 1), one, "'");;
+    return two;
+  }
+
+  function replaceAt(index, str, chr) {
+    if (index > str.length - 1) return str;
+    return str.substr(0, index) + chr + str.substr(index + 1);
   }
 
   function toSql(queries) {
