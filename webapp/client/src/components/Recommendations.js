@@ -64,11 +64,11 @@ export default class Recommendations extends React.Component {
 
 		return (
 			<div className="Recommendations">
-				<PageNavbar active="recommendations" />
+				<PageNavbar active="reviewers" />
 
 			    <div className="container recommendations-container">
 			    	<div className="jumbotron">
-			    		<div className="h5">Recommendations</div>
+			    		<div className="h5">Reviewer Search</div>
 			    		<br></br>
 			    		<div className="input-container">
 			    			<input type='text' placeholder="Enter Movie Name" value={this.state.movieName} onChange={this.handleMovieNameChange} id="movieName" className="movie-input"/>
@@ -85,6 +85,10 @@ export default class Recommendations extends React.Component {
 			    		</div>
 			    		<div className="results-container" id="results">
 			    			{this.state.recMovies}
+			    		</div>
+						<div className="input-container">
+			    			<input type='text' placeholder="Enter Movie Name" value={this.state.movieName} onChange={this.handleMovieNameChange} id="movieName" className="movie-input"/>
+			    			<button id="submitMovieBtn" className="submit-btn" onClick={this.submitMovie}>Submit</button>
 			    		</div>
 			    	</div>
 			    </div>
