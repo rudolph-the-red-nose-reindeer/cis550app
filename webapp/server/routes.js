@@ -112,6 +112,24 @@ function bestGenresPerDecade(req, res) {
       }
     });
 };
+function getProductInfo(req, res) {
+  var inputName = req.params.info;
+  var query =
+  `WITH productx AS (SELECT Asin
+  FROM Product
+  WHERE title = '${inputName}'))
+
+  SELECT *
+  FROM Review R JOIN productx P ON R.Asin=P.Asin;`;
+  //Gets product info and reviews about it
+    connection.query(query, function(err, rows, fields) {
+      if (err) console.log(err);
+      else {
+        console.log(rows);
+        res.json(rows);
+      }
+    });
+};
 
 // The exported functions, which can be accessed in index.js.
 module.exports = {
@@ -120,4 +138,6 @@ module.exports = {
 	getRecs: getRecs,
 	getDecades: getDecades,
   bestGenresPerDecade: bestGenresPerDecade
+  ,
+  getProductInfo: getProductInfo //ADDED
 }

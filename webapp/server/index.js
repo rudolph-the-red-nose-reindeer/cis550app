@@ -55,7 +55,8 @@ app.get('/decades', routes.getDecades);
 app.get('/bestgenres/:decade', routes.bestGenresPerDecade);
 
 
-
+app.get('/products/:info', routes.getProductInfo);
+//need to change reccomendations... to productinfo
 
 
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import PageNavbar from './PageNavbar';
 import RecommendationsRow from './RecommendationsRow';
+//import ProductsRows from './ProductsRows';
 import '../style/Recommendations.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -11,25 +12,25 @@ export default class Products extends React.Component {
 		// State maintained by this React component is the selected movie name,
 		// and the list of recommended movies.
 		this.state = {
-			movieName: "",
-			recMovies: []
+			productName: "",
+			productAttrs: []
 		}
 
-		this.handleMovieNameChange = this.handleMovieNameChange.bind(this);
-		this.submitMovie = this.submitMovie.bind(this);
+		this.handleProductNameChange = this.handleProductNameChange.bind(this);
+		this.submitProduct = this.submitProduct.bind(this);
 	}
 
-	handleMovieNameChange(e) {
+	handleProductNameChange(e) {
 		this.setState({
-			movieName: e.target.value
+			productName: e.target.value
 		});
 	}
 
 	/* ---- Q2 (Recommendations) ---- */
 	// Hint: Name of movie submitted is contained in `this.state.movieName`.
-	submitMovie() {
+	submitProduct() {
 		// Send an HTTP request to the server.
-    fetch("http://localhost:8081/recommendations/"+ this.state.movieName,
+    fetch("http://localhost:8081/products/"+ this.state.productName,
     {
       method: 'GET' // The type of HTTP request.
     }).then(res => {
@@ -44,14 +45,14 @@ export default class Products extends React.Component {
       // Map each genreObj in genreList to an HTML element:
       // A button which triggers the showMovies function for each genre.
       let recDivs = recList.map((recObj, i) =>
-      <RecommendationsRow  title={recObj.title} id={recObj.id} rating={recObj.rating} vote_count={recObj.vote_count} />
+      <RecommendationsRow  asin={recObj.asin} title={recObj.title} description={recObj.description} price={recObj.price} brand={recObj.brand}/>
       );
 
 
 
       // Set the state of the genres list to the value returned by the HTTP response from the server.
       this.setState({
-        recMovies: recDivs
+        productAttrs: recDivs
       });
     }, err => {
       // Print the error if there is one.
@@ -66,33 +67,31 @@ export default class Products extends React.Component {
 			<div className="Products">
 				<PageNavbar active="products" />
 
-			    <div className="container recommendations-container">
+			    <div className="container products-container">
 			    	<div className="jumbotron">
-			    		<div className="h5">Reviewer Search</div>
+			    		<div className="h5">Product search</div>
 			    		<br></br>
 			    		<div className="input-container">
-			    			<input type='text' placeholder="Enter Movie Name" value={this.state.movieName} onChange={this.handleMovieNameChange} id="movieName" className="movie-input"/>
-			    			<button id="submitMovieBtn" className="submit-btn" onClick={this.submitMovie}>Submit</button>
+			    			<input type='text' placeholder="Enter product name" value={this.state.productName} onChange={this.handleProductNameChange} id="productName" className="product-input"/>
+			    			<button id="submitMovieBtn" className="submit-btn" onClick={this.submitProduct}>Submit</button>
 			    		</div>
 			    		<div className="header-container">
-			    			<div className="h6">You may like ...</div>
+			    			<div className="h6">Product attributes</div>
 			    			<div className="headers">
-			    				<div className="header"><strong>Title</strong></div>
-			    				<div className="header"><strong>Movie ID</strong></div>
-					            <div className="header"><strong>Rating</strong></div>
-					            <div className="header"><strong>Vote Count</strong></div>
+			    				<div className="header"><strong>asin</strong></div>
+			    				<div className="header"><strong>title</strong></div>
+					            <div className="header"><strong>description</strong></div>
+					            <div className="header"><strong>price</strong></div>
+											<div className="header"><strong>brand</strong></div>
 			    			</div>
 			    		</div>
 			    		<div className="results-container" id="results">
-			    			{this.state.recMovies}
-			    		</div>
-						<div className="input-container">
-			    			<input type='text' placeholder="Enter Movie Name" value={this.state.movieName} onChange={this.handleMovieNameChange} id="movieName" className="movie-input"/>
-			    			<button id="submitMovieBtn" className="submit-btn" onClick={this.submitMovie}>Submit</button>
-			    		</div>
-			    	</div>
-			    </div>
-		    </div>
+			    			{this.state.productAttrs}
+								</div>
+							</div>
+						</div>
+					</div>
+
 		);
 	}
 }
