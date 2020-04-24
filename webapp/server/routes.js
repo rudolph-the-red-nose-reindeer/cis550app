@@ -23,6 +23,19 @@ function getAllGenres(req, res) {
   });
 };
 
+function getAllCategories(req, res) {
+  var query = `
+  SELECT DISTINCT Category
+  FROM Category;  
+  `;
+  connection.query(query, function(err, rows, fields) {
+    if (err) console.log(err);
+    else {
+      res.json(rows);
+    }
+  });
+};
+
 
 /* ---- Q1b (Dashboard) ---- */
 function getTopInGenre(req, res) {
@@ -34,6 +47,29 @@ function getTopInGenre(req, res) {
       FROM Movies M JOIN Genres G ON M.id=G.movie_id
       WHERE G.genre='${inputLogin}'
       ORDER BY M.rating DESC, M.vote_count DESC
+      LIMIT 10;`;
+    connection.query(query, function(err, rows, fields) {
+      if (err) console.log(err);
+      else {
+        console.log(rows);
+        res.json(rows);
+      }
+    });
+};
+
+function getTopInCategory(req, res) {
+  var inputCategory = req.params.genre;
+
+    var query = `
+    WITH products AS (SELECT Asin
+      FROM Category
+      WHERE Category = '${inputCategory}'),
+      ratings AS (SELECT  Asin, AVE(Overall) AS rating
+      FROM Review
+      GROUP BY Asin)
+      SELECT P.title, R.rating, count(R.rating) AS num_rating
+      FROM products P JOIN ratings R ON P.Asin=R.Asin
+      ORDER BY R.rating DESC, P.title 
       LIMIT 10;`;
     connection.query(query, function(err, rows, fields) {
       if (err) console.log(err);
@@ -116,7 +152,9 @@ function bestGenresPerDecade(req, res) {
 // The exported functions, which can be accessed in index.js.
 module.exports = {
 	getAllGenres: getAllGenres,
-	getTopInGenre: getTopInGenre,
+  getTopInGenre: getTopInGenre,
+  getAllCategories: getAllCategories,
+  getTopInCategory: getTopInCategory,
 	getRecs: getRecs,
 	getDecades: getDecades,
   bestGenresPerDecade: bestGenresPerDecade
