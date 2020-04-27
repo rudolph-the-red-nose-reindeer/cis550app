@@ -1,18 +1,16 @@
-// Private. Will not be included in submission
 module.exports = {
-  host: "fling.seas.upenn.edu",
-  user: "debrahj",
-  password: "IamanAkora16!",
-  database: "debrahj"
+  user: "cis550admin",
+
+  // Get the password from the environment variable
+  // NODE_ORACLEDB_PASSWORD.  The password could also be a hard coded
+  // string (not recommended), or it could be prompted for.
+  // Alternatively use External Authentication so that no password is
+  // needed.
+  password: "Vhr8z*U{.8cr",
+
+  // For information on connection strings see:
+  // https://oracle.github.io/node-oracledb/doc/api.html#connectionstrings
+  connectString: "(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=cis550project.c2khsgz1epv9.us-east-1.rds.amazonaws.com)(PORT=1521))(CONNECT_DATA=(SID=CIS550PR)))",
+
 };
 
-//USE:
-//Connect string: sqlplus
-//‘cis550adminnew@(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=cis-550-proj-new.cribzztotvfd.us-east-1.rds.amazonaws.com)
-//(PORT=1521))(CONNECT_DATA=(SID=REVDB)))’
-
-//user ID: cis550adminew
-
-//Password:  Vhr8z*U{.8cr
-
-//Database schema name: REVDB

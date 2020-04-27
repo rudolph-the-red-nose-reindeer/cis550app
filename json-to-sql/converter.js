@@ -39,11 +39,9 @@ function converter(input) {
     if (err) return console.error(err);
 
     const source = data;
-    fetchReviewerData(source);
-    fetchReviewData(source);
-    fetchReviewerData(source);
-    fetchReviewData(source);
-    fetchProductData(source);
+    //fetchReviewerData(source);
+    //fetchReviewData(source);
+    //fetchProductData(source);
     fetchCategoriesData(source);
     //fetchRelatedData(source)
     const inserts = toSql(valueInserts);
@@ -156,11 +154,23 @@ function converter(input) {
       var asin = `'${temp["asin"]}'`
       if (temp["categories"]) {
         for (var cat in temp["categories"]) {
-          const query = `INSERT INTO Category (category, asin) VALUES ('${cat}', ${asin})`;
+          var arr = temp["categories"]
+          var txt = arr[cat]
+          const query = `INSERT INTO Category (category, asin) VALUES ('${txt}', ${asin})`;
           valueInserts.push(query);
         }
       }
-      if (temp["main_cat"]) {
+
+      else if (temp["category"]) {
+        for (var cat in temp["category"]) {
+          var arr = temp["category"]
+          var txt = arr[cat]
+          const query = `INSERT INTO Category (category, asin) VALUES ('${txt}', ${asin})`;
+          valueInserts.push(query);
+        }
+      }
+
+      else if (temp["main_cat"]) {
         const query = `INSERT INTO Category (category, asin) VALUES ('${temp["main_cat"]}', ${asin})`;
         valueInserts.push(query);
       }
@@ -169,6 +179,17 @@ function converter(input) {
 
   function cleanText(text) {
     let newReviewText1 = text.slice(0, 255);
+    //console.log(newReviewText1);
+    let temp = JSON.stringify(newReviewText1);
+    let tempt = temp.replace(/'/g, "''");
+    //console.log(tempt);
+    let one = replaceAt(0, tempt, "'");
+    let two = replaceAt((one.length - 1), one, "'");;
+    return two;
+  }
+
+  function cleanCatText(text) {
+    let newReviewText1 = text;
     //console.log(newReviewText1);
     let temp = JSON.stringify(newReviewText1);
     let tempt = temp.replace(/'/g, "''");
