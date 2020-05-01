@@ -13,53 +13,33 @@ app.use(bodyParser.urlencoded({extended: false}));
 /* ------------------- Route handler registration ----------------- */
 /* ---------------------------------------------------------------- */
 
-
-
-
 /* ---- (Dashboard) ---- */
-// The route localhost:8081/genres is registered to the function
-// routes.getAllGenres, specified in routes.js.
-app.get('/genres', routes.getAllGenres);
+app.get('/categories', routes.getAllCategories);
+app.get('/categories/:category', routes.getTopReviewedProductsInCategory);
+app.get('/categories/:category', routes.getCheapestReviewedProductsInCategory);
+app.get('/categories/:category', routes.getMostExpensiveReviewedProductsInCategory);
+app.get('/categories/:category', routes.getMostReviewedProductsInCategory);
 
 
+/* ---- (Reviews) ---- */
+app.get('/reviews', routes.getLongestreviews);
+app.get('/reviews', routes.getNewestReviews);
 
+/* ---- (Products) ---- */
+app.get('/products', routes.getProductInfo);
+app.get('/products', routes.getProductStats);
+app.get('/products', routes.getTopProductsInBrand);
+app.get('/products', routes.getMostReviewedBrands);
+app.get('/products', routes.getMostExpensiveProductsInBrand);
+app.get('/products', routes.getBrandStats);
+app.get('/products', routes.getRelations);
+app.get('/products', routes.getRelated);
 
-
-
-/* ---- Q1b (Dashboard) ---- */
-app.get('/genres/:genre', routes.getTopInGenre); // Hint: Replace () => {} with the appropriate route handler.
-
-
-
-
-
-
-
-
-/* ---- Q2 (Recommendations) ---- */
-app.get('/recommendations/:rec', routes.getRecs);
-
-
-
-
-
-/* ---- (Best Genre) ---- */
-app.get('/decades', routes.getDecades);
-
-
-
-
-
-
-/* ---- Q3b (Best Genre) ---- */
-app.get('/bestgenres/:decade', routes.bestGenresPerDecade);
-
-
-app.get('/products/:info', routes.getProductInfo);
-//need to change reccomendations... to productinfo
-
-
-
+/* ---- (Reviewers) ---- */
+app.get('/reviewers', routes.getTopReviewers);
+app.get('/reviewers/:reviewer', routes.getReviewerStats);
+app.get('/reviewers/:reviewer', routes.getReviewerTime);
+app.get('/reviewers/:reviewer', routes.getTopReviewsByReviewer);
 
 app.listen(8081, () => {
 	console.log(`Server listening on PORT 8081`);
