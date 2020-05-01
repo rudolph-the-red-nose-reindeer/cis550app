@@ -22,14 +22,17 @@ export default class Dashboard extends React.Component {
   // React function that is called when the page load.
   componentDidMount() {
     // Send an HTTP request to the server.
-    fetch("http://localhost:8081/genres",
+    console.log('check0')
+    fetch("http://localhost:8081/categories",
     {
       method: 'GET' // The type of HTTP request.
     }).then(res => {
       // Convert the response data to a JSON.
+      console.log('check1')
       return res.json();
     }, err => {
       // Print the error if there is one.
+      console.log('check3')
       console.log(err);
     }).then(genreList => {
       if (!genreList) return;
@@ -37,7 +40,7 @@ export default class Dashboard extends React.Component {
       // Map each genreObj in genreList to an HTML element:
       // A button which triggers the showMovies function for each genre.
       let genreDivs = genreList.map((genreObj, i) =>
-      <GenreButton id={"button-" + genreObj.genre} onClick={() => this.showMovies(genreObj.genre)} genre={genreObj.genre} />
+      <GenreButton id={"button-" + genreObj.CATEGORY} onClick={() => this.showMovies(genreObj.CATEGORY)} genre={genreObj.CATEGORY} />
       );
 
 
@@ -55,9 +58,9 @@ export default class Dashboard extends React.Component {
 
   /* ---- Q1b (Dashboard) ---- */
   /* Set this.state.movies to a list of <DashboardMovieRow />'s. */
-  showMovies(genre) {
+  showMovies(Category) {
     // Send an HTTP request to the server.
-    fetch("http://localhost:8081/genres/"+ genre,
+    fetch("http://localhost:8081/categories/"+ Category,
     {
       method: 'GET' // The type of HTTP request.
     }).then(res => {
@@ -72,7 +75,7 @@ export default class Dashboard extends React.Component {
       // Map each genreObj in genreList to an HTML element:
       // A button which triggers the showMovies function for each genre.
       let movieDivs = movieList.map((movieObj, i) =>
-      <DashboardMovieRow  title={movieObj.title} rating={movieObj.rating} vote_count={movieObj.vote_count} />
+      <DashboardMovieRow  title={movieObj.TITLE} rating={movieObj.RATING} vote_count={movieObj.NUMREVIEWS} />
       );
 
 
@@ -96,7 +99,7 @@ export default class Dashboard extends React.Component {
         <br></br>
         <div className="container movies-container">
           <div className="jumbotron">
-            <div className="h5">Top Movies</div>
+            <div className="h5">Product Categories</div>
             <div className="genres-container">
               {this.state.genres}
             </div>
@@ -108,7 +111,7 @@ export default class Dashboard extends React.Component {
               <div className="movies-header">
                 <div className="header-lg"><strong>Title</strong></div>
                 <div className="header"><strong>Rating</strong></div>
-                <div className="header"><strong>Vote Count</strong></div>
+                <div className="header"><strong>No. of Ratings</strong></div>
               </div>
               <div className="results-container" id="results">
                 {this.state.movies}
