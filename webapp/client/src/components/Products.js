@@ -1,13 +1,21 @@
 import React from 'react';
 import PageNavbar from './PageNavbar';
 import RecommendationsRow from './RecommendationsRow';
+import './App.scss';
+import Dropdown from './Dropdown';
 //import ProductsRows from './ProductsRows';
 import '../style/Recommendations.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+
+
 export default class Products extends React.Component {
+
 	constructor(props) {
+
 		super(props);
+
+
 
 		// State maintained by this React component is the selected movie name,
 		// and the list of recommended movies.
@@ -76,7 +84,9 @@ export default class Products extends React.Component {
 			    			<button id="submitMovieBtn" className="submit-btn" onClick={this.submitProduct}>Submit</button>
 			    		</div>
 			    		<div className="header-container">
-			    			<div className="h6">Product attributes</div>
+			    		<div className="h6">Or <Dropdown title="Other product information" />
+							</div>
+								<div className="h6"></div>
 			    			<div className="headers">
 			    				<div className="header"><strong>asin</strong></div>
 			    				<div className="header"><strong>title</strong></div>

@@ -9,6 +9,8 @@ import Reviews from './Reviews';
 import Products from './Products';
 import Reviewers from './Reviewers';
 
+/*import from './' */
+
 export default class App extends React.Component {
 
 	render() {
