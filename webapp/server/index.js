@@ -21,12 +21,10 @@ app.get('/categories/:category', routes.getTopProductsInCategory);
 //app.get('/reviews', routes.getLongestReviews);
 
 /* ---- (Products) ---- */
-//app.get('/products', routes.getProductInfo);
-//app.get('/products', routes.getProductStats);
-
+app.get('/products', routes.getProductInfo);
 /* ---- (Reviewers) ---- */
 //app.get('/reviewers', routes.getTopReviewers);
-//app.get('/reviewers/:reviewer', routes.getReviewerStats);
+app.get('/reviewers/:reviewer', routes.getReviewerStats);
 
 
 app.listen(8081, () => {

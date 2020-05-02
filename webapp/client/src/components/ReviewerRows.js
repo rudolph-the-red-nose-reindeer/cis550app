@@ -8,7 +8,7 @@ export default class RecommendationsRow extends React.Component {
 
 	render() {
 		return (
-			<div className="movieResults"> 
+			<div className="movieResults"> //change (ERROR?)
 				<div className="asin">{this.props.asin}</div>
 				<div className="title">{this.props.title}</div>
 				<div className="description">{this.props.description}</div>

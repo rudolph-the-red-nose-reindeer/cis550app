@@ -11,11 +11,11 @@ run();
 
 
 async function getAllCategories(req, res) {
-  var query = 
-    `SELECT * 
-    FROM (SELECT DISTINCT Category FROM Category 
-    GROUP BY Category 
-    ORDER BY COUNT(*) DESC) 
+  var query =
+    `SELECT *
+    FROM (SELECT DISTINCT Category FROM Category
+    GROUP BY Category
+    ORDER BY COUNT(*) DESC)
     WHERE rownum <=20`;
     try{
        console.log("Successfully connected to Oracle!")
@@ -23,7 +23,7 @@ async function getAllCategories(req, res) {
        res.json(result.rows);
     } catch(err) {
         console.log("Error: ", err);
-      } 
+      }
 };
 
 async function getTopProductsInCategory(req, res) {
@@ -46,16 +46,62 @@ async function getTopProductsInCategory(req, res) {
        res.json(result.rows);
     } catch(err) {
         console.log("Error: ", err);
-      } 
+      }
 };
+
+
+
+
+async function getProductInfo(req, res) {
+  var inputName = req.params.info;
+  var query =
+  `
+  SELECT * FROM(
+  SELECT P.Description, P.price, P.brand, RE.Name, R.reviewText, R.Overall, R.reviewDate
+  FROM Product P LEFT JOIN Review R ON R.Asin=P.Asin LEFT JOIN Reviewer RE ON R.reviewerID = RE.reviewerID
+  WHERE R.Asin IN (SELECT Asin
+  FROM Product
+  WHERE title = '` + inputName + `')
+  ORDER BY CASE WHEN R.Overall IS NULL THEN 1 ELSE 0 END, R.Overall DESC) WHERE rownum <= 10
+  `;
+  //Gets product info and reviews about it
+  try{
+     console.log("Successfully connected to Oracle!")
+     result = await connection.execute(query);
+     res.json(result.rows);
+  } catch(err) {
+      console.log("Error: ", err);
+    }
+
+    };
+
+async function getReviewerStats(req,res){
+    var inputName = req.params.stats;
+    var query =
+    `
+    SELECT RE.Name, COUNT(*) AS numReviews, AVG(R.Overall) AS avgRating
+    FROM Review R JOIN Reviewer RE ON R.reviewerID = RE.reviewerID
+    WHERE RE.Name = '` + inputName + `'
+    GROUP BY RE.Name
+    `;
+    try{
+       console.log("Successfully connected to Oracle!")
+       result = await connection.execute(query);
+       res.json(result.rows);
+    } catch(err) {
+        console.log("Error: ", err);
+      }
+};
+
+
 
 // The exported functions, which can be accessed in index.js.
 module.exports = {
   getAllCategories: getAllCategories,
   getTopProductsInCategory: getTopProductsInCategory,
-  /*getLongestReviews: getLongestReviews,
   getProductInfo: getProductInfo,
+  getReviewerStats: getReviewerStats
+  /*getLongestReviews: getLongestReviews,
   getProductStats: getProductStats,
-  getTopReviewers: getTopReviewers,
-  getReviewerStats: getReviewerStats*/
+  getTopReviewers: getTopReviewers,*/
 }
