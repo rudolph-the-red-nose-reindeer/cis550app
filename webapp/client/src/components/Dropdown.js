@@ -1,6 +1,6 @@
  import React, { useState } from 'react';
 //import onClickOutside from 'react-onclickoutside';
-
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 
@@ -62,7 +62,8 @@ function Dropdown({ title, multiSelect = false }) {
             <li className="dd-list-item" key={item.id}>
               <button type="button" onClick={() => handleOnClick(item)}>
                 <span>{item.value}</span>
-                <span>{isItemInSelection(item) && 'Selected'}</span>
+                //need to add paths to pages and link them properly
+                <span>{isItemInSelection(item) && <a  href={"/" + item}>{item.charAt(0).toUpperCase() + item.substring(1, item.length)}</a>}</span>
               </button>
             </li>
           ))}
@@ -71,5 +72,7 @@ function Dropdown({ title, multiSelect = false }) {
     </div>
   );
 }
+
+
 
 export default Dropdown;

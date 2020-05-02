@@ -8,8 +8,14 @@ import Dashboard from './Dashboard';
 import Reviews from './Reviews';
 import Products from './Products';
 import Reviewers from './Reviewers';
-
-/*import from './' */
+ /*import ProductsStats from './ProductsStats'
+ import TopProductsBrand from './TopProductsBrand'
+ import MostReviewedBrands from './MostReviewedBrands'
+ import MostExpensiveProductinBrand from './MostExpensiveProductinBrand'
+ import BrandStats from './BrandStats'
+ import RelatedProducts from './RelatedProducts'
+ import TopReviewers from './TopReviewers'
+ import TopReviewsByReviewer from './TopReviewsByReviewer' */
 
 export default class App extends React.Component {
 
@@ -32,6 +38,13 @@ export default class App extends React.Component {
 								<Dashboard />
 							)}
 						/>
+					/*	<Route
+							exact
+							path="/productstats"
+							render={() => (
+								<ProductsStats />
+							)}
+						/> */
 						<Route
 							exact
 							path="/reviews"
@@ -39,6 +52,55 @@ export default class App extends React.Component {
 								<Reviews />
 							)}
 						/>
+					/*	<Route
+							exact
+							path="/topproductsbrand"
+							render={() => (
+								<TopProductsBrand />
+							)}
+						/>
+						<Route
+							exact
+							path="/mostreviewedbrands"
+							render={() => (
+								<MostReviewedBrands />
+							)}
+						/>
+						<Route
+							exact
+							path="/mostexpensiveproductinbrand"
+							render={() => (
+								<MostExpensiveProductinBrand />
+							)}
+						/>
+						<Route
+							exact
+							path="/brandstats"
+							render={() => (
+								<BrandStats />
+							)}
+						/>
+						<Route
+							exact
+							path="/relatedproducts"
+							render={() => (
+								<RelatedProducts />
+							)}
+						/>
+						<Route
+							exact
+							path="/topreviewers"
+							render={() => (
+								<TopReviewers />
+							)}
+						/>
+						<Route
+							exact
+							path="/topreviewsbyreviewer"
+							render={() => (
+								<TopReviewsByReviewer />
+							)}
+						/> */
 						<Route
 							path="/reviewers"
 							render={() => (
