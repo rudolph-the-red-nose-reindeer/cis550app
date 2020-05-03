@@ -282,6 +282,30 @@ async function getReviewerStats(req,res){
       }
 };
 
+/* Reviews */
+/* ---- (Reviews) ---- */
+async function getLongestReviews(req, res) {
+  var inputTitle = req.params.title;
+  //var inputNum = req.params.num;
+    var query = `
+    SELECT * FROM(
+    SELECT P.title, R.Overall AS rating, R.reviewText AS review, RE.Name AS reviewerName, R.time AS time
+    FROM Review R JOIN Product P ON R.Asin = P.Asin JOIN Reviewer RE ON R.reviewerID = RE.reviewerID
+    WHERE R.Asin IN (SELECT Asin
+    FROM Product
+    WHERE title = '${inputTitle}')
+    ORDER BY R.time DESC, RE.Name) WHERE rownum <= 10
+  `;
+  try{
+    console.log("Successfully connected to Oracle!")
+    result = await connection.execute(query);
+    console.log(result.rows);
+    res.json(result.rows);
+  } catch(err) {
+     console.log("Error: ", err);
+   } 
+}; 
+
 
 
 // The exported functions, which can be accessed in index.js.
@@ -290,14 +314,14 @@ module.exports = {
   getTopProductsInCategory: getTopProductsInCategory,
   getProductInfo: getProductInfo,
   getReviewerStats: getReviewerStats,  getProductStats: getProductStats,
-    getTopProductsInBrand: getTopProductsInBrand,
-    getMostReviewedBrands: getMostReviewedBrands,
-    getMostExpensiveProductsInBrand: getMostExpensiveProductsInBrand,
-    getBrandStats: getBrandStats,
-    getRelations: getRelations,
-    getRelated: getRelated,
-    getTopReviewers: getTopReviewers,
-    getReviewerTime: getReviewerTime,
-    getTopReviewsByReviewer: getTopReviewsByReviewer
-
+  getTopProductsInBrand: getTopProductsInBrand,
+  getMostReviewedBrands: getMostReviewedBrands,
+  getMostExpensiveProductsInBrand: getMostExpensiveProductsInBrand,
+  getBrandStats: getBrandStats,
+  getRelations: getRelations,
+  getRelated: getRelated,
+  getTopReviewers: getTopReviewers,
+  getReviewerTime: getReviewerTime,
+  getTopReviewsByReviewer: getTopReviewsByReviewer,
+  getLongestReviews: getLongestReviews
 }

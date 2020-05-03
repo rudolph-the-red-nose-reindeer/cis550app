@@ -16,9 +16,9 @@ app.use(bodyParser.urlencoded({extended: false}));
 /* ---- (Dashboard) ---- */
 app.get('/categories', routes.getAllCategories);
 app.get('/categories/:category', routes.getTopProductsInCategory);
-app.get('/categories/:category', routes.getCheapestReviewedProductsInCategory);
-app.get('/categories/:category', routes.getMostExpensiveReviewedProductsInCategory);
-app.get('/categories/:category', routes.getMostReviewedProductsInCategory);
+//app.get('/categories/:category', routes.getCheapestReviewedProductsInCategory);
+//app.get('/categories/:category', routes.getMostExpensiveReviewedProductsInCategory);
+//app.get('/categories/:category', routes.getMostReviewedProductsInCategory);
 /* ---- (Reviews) ---- */
 //app.get('/reviews', routes.getLongestReviews);
 
@@ -40,8 +40,8 @@ app.get('/reviewers/:reviewer', routes.getReviewerTime);
 app.get('/reviewers/:reviewer', routes.getTopReviewsByReviewer);
 
 /* ---- (Reviews) ---- */
-app.get('/reviews', routes.getLongestreviews);
-app.get('/reviews', routes.getNewestReviews);
+app.get('/reviews/:title', routes.getLongestReviews);
+//app.get('/reviews', routes.getNewestReviews);
 
 
 
