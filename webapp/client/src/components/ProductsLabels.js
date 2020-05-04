@@ -1,14 +1,13 @@
 import React from 'react';
 import PageNavbar from './PageNavbar';
-import ReviewerTimeRow from './ReviewerTimeRow';
-import './App.scss';
-import Dropdown1 from './Dropdown1';
 import '../style/Recommendations.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Dropdown from './Dropdown';
 
 
 
-export default class ReviewerTime extends React.Component {
+export default class ProductStats extends React.Component {
 
 	constructor(props) {
 
@@ -23,8 +22,7 @@ export default class ReviewerTime extends React.Component {
 			productAttrs: []
 		}
 
-		this.handleProductNameChange = this.handleProductNameChange.bind(this);
-		this.submitProduct = this.submitProduct.bind(this);
+		
 	}
 
 	handleProductNameChange(e) {
@@ -35,9 +33,12 @@ export default class ReviewerTime extends React.Component {
 
 	/* ---- Q2 (Recommendations) ---- */
 	// Hint: Name of movie submitted is contained in `this.state.movieName`.
-	submitProduct() {
+	componentDidMount() {
 		// Send an HTTP request to the server.
-    fetch("http://localhost:8081/time%20spent%20writing/"+ this.state.productName,
+
+
+		//CHANGE THIS
+    fetch("http://localhost:8081/Get%20product%20labels",
     {
       method: 'GET' // The type of HTTP request.
     }).then(res => {
@@ -47,16 +48,18 @@ export default class ReviewerTime extends React.Component {
       // Print the error if there is one.
       console.log(err);
     }).then(recList => {
-      if (!recList) return;
+	  
+	  if (!recList) return;
+	  console.log(recList);
+	  
 
       // Map each genreObj in genreList to an HTML element:
       // A button which triggers the showMovies function for each genre.
       let recDivs = recList.map((recObj, i) =>
-      	<tr>
-			<td>{recObj.NAME}</td>
-			<td>{recObj.TOTALTIME}</td>
-	  	</tr>
-      );
+		<tr>
+			<td>{recObj.LABEL}</td>
+	  	</tr>      
+	  );
 
 
 
@@ -74,24 +77,23 @@ export default class ReviewerTime extends React.Component {
 	render() {
 
 		return (
-			<div className="Reviewers">
-				<PageNavbar active="reviewers" />
+			<div className="Products">
+				<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"></link>
+  				<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  				<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+				<PageNavbar active="products" />
 
 			    <div className="container products-container">
 			    	<div className="jumbotron">
-			    		<div className="h5">Reviewer search</div>
+			    		<div className="h5">Product Stats</div>
 			    		<br></br>
-			    		<div className="input-container">
-			    			<input type='text' placeholder="Enter reviwer name" value={this.state.productName} onChange={this.handleProductNameChange} id="productName" className="reviwertime-input"/>
-			    			<button id="submitMovieBtn" className="submit-btn" onClick={this.submitProduct}>Submit</button>
-								</div>
-								<div class="container">
-						<div className="h6">Or <Dropdown1 title="Other reviewer information" /></div>
+						<div class="container">
+						<div className="h6">Or <Dropdown title="Other product information" /></div>
 						<table class="table table-striped">
 							<thead>
 							<tr>
-								<th>Name</th>
-								<th>Total Time spent on Reviews (seconds)</th>
+								<th>Labels</th>
 							</tr>
 							</thead>
 							<tbody>
@@ -99,10 +101,9 @@ export default class ReviewerTime extends React.Component {
 							</tbody>
 						</table>
 			    		</div>
+							</div>
+						</div>
 					</div>
-				</div>
-			</div>
-
 		);
 	}
 }

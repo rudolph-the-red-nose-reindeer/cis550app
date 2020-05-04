@@ -1,7 +1,6 @@
 import React from 'react';
 import PageNavbar from './PageNavbar';
-import TopReviewersRow from './TopReviewersRow';
-
+import Dropdown1 from './Dropdown1';
 import '../style/Recommendations.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -22,8 +21,7 @@ export default class TopReviewers extends React.Component {
 			productAttrs: []
 		}
 
-		this.handleProductNameChange = this.handleProductNameChange.bind(this);
-		this.submitProduct = this.submitProduct.bind(this);
+		
 	}
 
 	handleProductNameChange(e) {
@@ -34,9 +32,9 @@ export default class TopReviewers extends React.Component {
 
 	/* ---- Q2 (Recommendations) ---- */
 	// Hint: Name of movie submitted is contained in `this.state.movieName`.
-	submitProduct() {
+	componentDidMount() {
 		// Send an HTTP request to the server.
-    fetch("http://localhost:8081/Get%20top%20reviewers/"+ this.state.productName,
+    fetch("http://localhost:8081/Get%20top%20reviewers",
     {
       method: 'GET' // The type of HTTP request.
     }).then(res => {
@@ -51,7 +49,10 @@ export default class TopReviewers extends React.Component {
       // Map each genreObj in genreList to an HTML element:
       // A button which triggers the showMovies function for each genre.
       let recDivs = recList.map((recObj, i) =>
-      <TopReviewers  Name={recObj.Name} numReviews={recObj.numReviews} />
+      	<tr>
+			<td>{recObj.NAME}</td>
+			<td>{recObj.NUMREVIEWS}</td>
+	  	</tr>
       );
 
 
@@ -77,26 +78,23 @@ export default class TopReviewers extends React.Component {
 			    	<div className="jumbotron">
 			    		<div className="h5">Top Reviewers</div>
 			    		<br></br>
-			    		<div className="input-container">
-			    			<input type='text' placeholder="" value={this.state.productName} onChange={this.handleProductNameChange} id="productName" className="topreviewers-input"/>
-			    			<button id="submitMovieBtn" className="submit-btn" onClick={this.submitProduct}>Submit</button>
-								</div>
-								<div className="header-container">
-								<div className="h6">
-								</div>
-									<div className="h6"></div>
-									<div className="headers">
-			    				<div className="header"><strong>reviewer name</strong></div>
-			    				<div className="header"><strong>number of reviews written</strong></div>
-
-			    			</div>
+			    		<div class="container">
+						<div className="h6">Or <Dropdown1 title="Other reviewer information" /></div>
+						<table class="table table-striped">
+							<thead>
+							<tr>
+								<th>Name</th>
+								<th>Number of Reviews</th>
+							</tr>
+							</thead>
+							<tbody>
+								{this.state.productAttrs}
+							</tbody>
+						</table>
 			    		</div>
-			    		<div className="results-container" id="results">
-			    			{this.state.productAttrs}
-								</div>
-								 			</div>
-							</div>
-						</div>
+					</div>
+				</div>
+			</div>
 
 
 		);

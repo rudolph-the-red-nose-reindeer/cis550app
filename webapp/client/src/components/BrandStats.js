@@ -1,9 +1,8 @@
 import React from 'react';
 import PageNavbar from './PageNavbar';
-import BrandStatsRow from './BrandStatsRow';
-
 import '../style/Recommendations.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Dropdown from './Dropdown';
 
 
 
@@ -51,7 +50,10 @@ export default class BrandStats extends React.Component {
       // Map each genreObj in genreList to an HTML element:
       // A button which triggers the showMovies function for each genre.
       let recDivs = recList.map((recObj, i) =>
-      <BrandStats  aveRating={recObj.aveRating} avePrice={recObj.avePrice} />
+      	<tr>
+			<td>{recObj.AVERATING}</td>
+			<td>{recObj.AVEPRICE}</td>
+	  	</tr>
       );
 
 
@@ -78,25 +80,27 @@ export default class BrandStats extends React.Component {
 			    		<div className="h5">Get Brand Stats</div>
 			    		<br></br>
 			    		<div className="input-container">
-			    			<input type='text' placeholder="Enter brand name" value={this.state.brand} onChange={this.handleProductNameChange} id="productName" className="brandstats-input"/>
+			    			<input type='text' placeholder="Enter Brand name" value={this.state.brand} onChange={this.handleProductNameChange} id="productName" className="brandstats-input"/>
 			    			<button id="submitMovieBtn" className="submit-btn" onClick={this.submitProduct}>Submit</button>
 								</div>
-								<div className="header-container">
-								<div className="h6">
-								</div>
-									<div className="h6"></div>
-									<div className="headers">
-			    				<div className="header"><strong>Average rating</strong></div>
-			    				<div className="header"><strong>Average price</strong></div>
-
-			    			</div>
-			    		</div>
-			    		<div className="results-container" id="results">
-			    			{this.state.productAttrs}
-								</div>
-								</div>
+								<div class="container">
+						<div className="h6">Or <Dropdown title="Other product information" />
 							</div>
-						</div>
+							<table class="table table-striped">
+								<thead>
+								<tr>
+									<th>Average Rating</th>
+									<th>Average Price</th>
+								</tr>
+								</thead>
+								<tbody>
+									{this.state.productAttrs}
+								</tbody>
+							</table>
+			    		</div>
+					</div>
+				</div>
+			</div>
 
 		);
 	}

@@ -3,6 +3,7 @@ import PageNavbar from './PageNavbar';
 import RelatedProductsRow from './RelatedProductsRow';
 import '../style/Recommendations.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Dropdown from './Dropdown';
 
 
 

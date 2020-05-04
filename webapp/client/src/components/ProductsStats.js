@@ -1,9 +1,9 @@
 import React from 'react';
 import PageNavbar from './PageNavbar';
-import ProductStatsRow from './ProductStatsRow';
 import '../style/Recommendations.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Dropdown from './Dropdown';
 
 
 
@@ -95,6 +95,7 @@ export default class ProductStats extends React.Component {
 			    			<button id="submitMovieBtn" className="submit-btn" onClick={this.submitProduct}>Submit</button>
 			    		</div>
 						<div class="container">
+						<div className="h6">Or <Dropdown title="Other product information" /></div>
 						<table class="table table-striped">
 							<thead>
 							<tr>
@@ -107,9 +108,9 @@ export default class ProductStats extends React.Component {
 							</tbody>
 						</table>
 			    		</div>
-							</div>
-						</div>
 					</div>
+				</div>
+			</div>
 		);
 	}
 }

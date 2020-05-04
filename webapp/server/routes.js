@@ -101,7 +101,7 @@ async function getTopProductsInBrand(req, res) {
   var inputBrand = req.params.brand;
   var query = `
     SELECT * FROM(
-    SELECT P.title, P.Description, P.price, AVG(R.Overall)
+    SELECT P.title, P.Description, P.price, AVG(R.Overall) AS rating
     FROM Product P LEFT JOIN Review R ON R.Asin=P.Asin
     WHERE P.brand = '` + inputBrand + `'
     GROUP BY P.title, P.Description, P.price
@@ -144,7 +144,7 @@ async function getMostExpensiveProductsInBrand(req, res) {
   var inputBrand = req.params.brand;
   var query = `
     SELECT * FROM(
-    SELECT P.title, P.Description, P.price, AVG(R.Overall)
+    SELECT P.title, P.Description, P.price, AVG(R.Overall) AS AveRating
     FROM Product P LEFT JOIN Review R ON R.Asin=P.Asin
     WHERE P.brand = '` + inputBrand + `'
     GROUP BY P.title, P.Description, P.price
@@ -247,7 +247,7 @@ async function getTopReviewers(req, res) {
 
     //Gets the time that the reviewer has spent writing reviews
 async function getReviewerTime(req, res) {
-  var inputName = req.params.name;
+  var inputName = req.params.reviewer;
   var query = `
     SELECT RE.Name, SUM(R.time) AS totalTime
     FROM Review R JOIN Reviewer RE ON R.reviewerID = RE.reviewerID
@@ -272,7 +272,7 @@ async function getTopReviewsByReviewer(req, res) {
     SELECT P.title AS productName, R.Overall AS rating, R.reviewText AS review, R.time AS time
     FROM Review R JOIN Product P ON R.Asin = P.Asin JOIN Reviewer RE ON R.reviewerID = RE.reviewerID
     WHERE RE.name = '` + inputName + `'
-    ORDER BY R.Overall DESC, R.productName) WHERE rownum <= 10
+    ORDER BY R.Overall DESC) WHERE rownum <= 10
   `;
   try{
     console.log("Successfully connected to Oracle!")
@@ -287,7 +287,7 @@ async function getTopReviewsByReviewer(req, res) {
 
 
 async function getReviewerStats(req,res){
-  var inputName = req.params.stats;
+  var inputName = req.params.reviewer;
   var query =
     `
     SELECT RE.Name, COUNT(*) AS numReviews, AVG(R.Overall) AS avgRating

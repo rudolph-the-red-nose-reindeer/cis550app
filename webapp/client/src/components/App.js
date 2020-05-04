@@ -17,9 +17,9 @@ import TopReviewers from './TopReviewers'
 import TopReviewsByReviewer from './TopReviewsByReviewer'
  import BrandStats from './BrandStats'
  import ReviewerTime from './ReviewerTime'
- /*import RelatedProducts from './RelatedProducts'
+ import ProductsLabels from './ProductsLabels'
 
-  */
+  
 
 export default class App extends React.Component {
 
@@ -79,6 +79,14 @@ export default class App extends React.Component {
 									path="/Get related products"
 									render={() => (
 										<RelatedProducts />
+									)}
+								/>
+
+								<Route
+									exact
+									path="/Get product labels"
+									render={() => (
+										<ProductsLabels />
 									)}
 								/>
 

@@ -1,9 +1,8 @@
 import React from 'react';
 import PageNavbar from './PageNavbar';
-import MostReviewedBrandRows from './MostReviewedBrandRows';
-//import ProductsRows from './ProductsRows';
 import '../style/Recommendations.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Dropdown from './Dropdown';
 
 
 
@@ -22,8 +21,8 @@ export default class MostReviewedBrands extends React.Component {
 			productAttrs: []
 		}
 
-		this.handleProductNameChange = this.handleProductNameChange.bind(this);
-		this.submitProduct = this.submitProduct.bind(this);
+		//this.handleProductNameChange = this.handleProductNameChange.bind(this);
+		//this.submitProduct = this.submitProduct.bind(this);
 	}
 
 	handleProductNameChange(e) {
@@ -34,9 +33,9 @@ export default class MostReviewedBrands extends React.Component {
 
 	/* ---- Q2 (Recommendations) ---- */
 	// Hint: Name of movie submitted is contained in `this.state.movieName`.
-	submitProduct() {
+	componentDidMount() {
 		// Send an HTTP request to the server.
-    fetch("http://localhost:8081/Most%20reviewed%20brands/"+ this.state.productName,
+    fetch("http://localhost:8081/Most%20reviewed%20brands",
     {
       method: 'GET' // The type of HTTP request.
     }).then(res => {
@@ -51,7 +50,11 @@ export default class MostReviewedBrands extends React.Component {
       // Map each genreObj in genreList to an HTML element:
       // A button which triggers the showMovies function for each genre.
       let recDivs = recList.map((recObj, i) =>
-      <MostReviewedBrandRows  brand={recObj.brand} number_of_reviews={recObj.number_of_reviews} average_rating={recObj.average_ratin} />
+      	<tr>
+			<td>{recObj.BRAND}</td>
+			<td>{recObj.NUMREVIEWS}</td>
+			<td>{recObj.AVERATING}</td>
+	  	</tr>
       );
 
 
@@ -77,26 +80,25 @@ export default class MostReviewedBrands extends React.Component {
 			    	<div className="jumbotron">
 			    		<div className="h5">Most reviewed brands</div>
 			    		<br></br>
-			    		<div className="input-container">
-			    			<input type='text' placeholder="Enter product name" value={this.state.productName} onChange={this.handleProductNameChange} id="productName" className="mostreviewedbrands-input"/>
-			    			<button id="submitMovieBtn" className="submit-btn" onClick={this.submitProduct}>Submit</button>
+			    		<div class="container">
+						<div className="h6">Or <Dropdown title="Other product information" />
+							</div>
+							<table class="table table-striped">
+								<thead>
+								<tr>
+									<th>Brand</th>
+									<th>No. of Reviews</th>
+									<th>Average Rating</th>
+								</tr>
+								</thead>
+								<tbody>
+									{this.state.productAttrs}
+								</tbody>
+							</table>
 			    		</div>
-			    		<div className="header-container">
-							<div className="h6">
-							</div>
-								<div className="h6"></div>
-			    			<div className="headers">
-			    				<div className="header"><strong>brand</strong></div>
-			    				<div className="header"><strong>number of reviews</strong></div>
-					            <div className="header"><strong>average rating</strong></div>
-			    			</div>
-			    		</div>
-			    		<div className="results-container" id="results">
-			    			{this.state.productAttrs}
-								</div>
-							</div>
-							</div>
-						</div>
+					</div>
+				</div>
+			</div>
 
 
 		);
