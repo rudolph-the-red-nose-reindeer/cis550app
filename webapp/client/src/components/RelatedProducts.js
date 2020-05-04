@@ -18,17 +18,24 @@ export default class RelatedProducts extends React.Component {
 		// State maintained by this React component is the selected movie name,
 		// and the list of recommended movies.
 		this.state = {
-			productName: "",
+			productNametitle: "",
+			productNamerelation:"",
 			productAttrs: []
 		}
 
-		this.handleProductNameChange = this.handleProductNameChange.bind(this);
+		this.handleProductNameChange0 = this.handleProductNameChange0.bind(this);
+			this.handleProductNameChange1 = this.handleProductNameChange1.bind(this);
 		this.submitProduct = this.submitProduct.bind(this);
 	}
 
-	handleProductNameChange(e) {
+	handleProductNameChange0(e) {
 		this.setState({
-			productName: e.target.value
+			productNametitle: e.target.value
+		});
+	}
+	handleProductNameChange1(e) {
+		this.setState({
+			productNamerelation: e.target.value
 		});
 	}
 
@@ -36,7 +43,7 @@ export default class RelatedProducts extends React.Component {
 	// Hint: Name of movie submitted is contained in `this.state.movieName`.
 	submitProduct() {
 		// Send an HTTP request to the server.
-    fetch("http://localhost:8081/Get%20related%20products/"+ this.state.productName,
+    fetch("http://localhost:8081/Get%20related%20products/"+ this.state.productNametitle + this.state.productNamerelation,
     {
       method: 'GET' // The type of HTTP request.
     }).then(res => {
@@ -77,12 +84,10 @@ export default class RelatedProducts extends React.Component {
 			    	<div className="jumbotron">
 			    		<div className="h5">Search for related products</div>
 			    		<br></br>
-			    		<div className="input-container">
-			    			<input type='text' placeholder="Enter product name" value={this.state.productName} onChange={this.handleProductNameChange} id="productName" className="relatedproducts-input"/>
-			    			<button id="submitMovieBtn" className="submit-btn" onClick={this.submitProduct}>Submit</button>
-								</div>
+			    	
 								<div className="input-container">
-									<input type='text' placeholder="Enter product label" value={this.state.productName} onChange={this.handleProductNameChange} id="productName" className="relatedproducts-input"/>
+									<input type='text' placeholder="Enter product name" value={this.state.productNametitle} onChange={this.handleProductNameChange0} id="productNametitle" className="relatedproducts-input"/>
+									<input type='text' placeholder="Enter product label" value={this.state.productNamerelation} onChange={this.handleProductNameChange1} id="productNamerelation" className="relatedproducts-input"/>
 									<button id="submitMovieBtn" className="submit-btn" onClick={this.submitProduct}>Submit</button>
 									</div>
 				    		<div className="header-container">
