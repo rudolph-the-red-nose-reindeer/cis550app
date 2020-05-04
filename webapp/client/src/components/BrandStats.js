@@ -36,7 +36,7 @@ export default class BrandStats extends React.Component {
 	// Hint: Name of movie submitted is contained in `this.state.movieName`.
 	submitProduct() {
 		// Send an HTTP request to the server.
-    fetch("http://localhost:8081/brandstats/"+ this.state.productName,
+    fetch("http://localhost:8081/Average rating and price in a brand/"+ this.state.productName,
     {
       method: 'GET' // The type of HTTP request.
     }).then(res => {
@@ -80,22 +80,23 @@ export default class BrandStats extends React.Component {
 			    		<div className="input-container">
 			    			<input type='text' placeholder="Enter brand name" value={this.state.productName} onChange={this.handleProductNameChange} id="productName" className="brandstats-input"/>
 			    			<button id="submitMovieBtn" className="submit-btn" onClick={this.submitProduct}>Submit</button>
-			    		</div>
-			    		<div className="header-container">
-							</div>
-								<div className="h6"></div>
-			    			<div className="headers">
+								</div>
+								<div className="header-container">
+								<div className="h6">
+								</div>
+									<div className="h6"></div>
+									<div className="headers">
 			    				<div className="header"><strong>Average rating</strong></div>
 			    				<div className="header"><strong>Average price</strong></div>
-					    
+
 			    			</div>
 			    		</div>
 			    		<div className="results-container" id="results">
 			    			{this.state.productAttrs}
 								</div>
+								</div>
 							</div>
 						</div>
-					</div>
 
 		);
 	}

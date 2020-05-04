@@ -8,14 +8,18 @@ import Dashboard from './Dashboard';
 import Reviews from './Reviews';
 import Products from './Products';
 import Reviewers from './Reviewers';
- /*import ProductsStats from './ProductsStats'
+ import ProductsStats from './ProductsStats'
  import TopProductsBrand from './TopProductsBrand';
  import MostReviewedBrands from './MostReviewedBrands'
  import MostExpensiveProductinBrand from './MostExpensiveProductinBrand'
+import RelatedProducts from './RelatedProducts'
+import TopReviewers from './TopReviewers'
+import TopReviewsByReviewer from './TopReviewsByReviewer'
  import BrandStats from './BrandStats'
- import RelatedProducts from './RelatedProducts'
- import TopReviewers from './TopReviewers'
- import TopReviewsByReviewer from './TopReviewsByReviewer' */
+ import ReviewerTime from './ReviewerTime'
+ /*import RelatedProducts from './RelatedProducts'
+
+  */
 
 export default class App extends React.Component {
 
@@ -38,8 +42,78 @@ export default class App extends React.Component {
 								<Dashboard />
 							)}
 						/>
-
 						<Route
+								exact
+								path="/Product stats"
+								render={() => (
+									<ProductsStats />
+								)}
+							/>
+
+							<Route
+									exact
+									path="/Top products in a brand"
+									render={() => (
+										<TopProductsBrand />
+									)}
+								/>
+
+								<Route
+									exact
+									path="/Most reviewed brands"
+									render={() => (
+										<MostReviewedBrands />
+									)}
+								/>
+
+								<Route
+									exact
+									path="/Most expensive products per brand"
+									render={() => (
+										<MostExpensiveProductinBrand />
+									)}
+								/>
+
+								<Route
+									exact
+									path="/Get related products"
+									render={() => (
+										<RelatedProducts />
+									)}
+								/>
+
+								<Route
+									exact
+									path="/Get top reviewers"
+									render={() => (
+										<TopReviewers />
+									)}
+								/>
+
+								<Route
+									exact
+									path="/Top products a reviewer has reviewed"
+									render={() => (
+										<TopReviewsByReviewer />
+									)}
+								/>
+								<Route
+									exact
+									path="/Average rating and price in a brand"
+									render={() => (
+										<BrandStats />
+									)}
+								/>
+
+								<Route
+									exact
+									path="/Time spent writing"
+									render={() => (
+										<ReviewerTime />
+									)}
+								/>
+
+				<Route
 							exact
 							path="/reviews"
 							render={() => (
@@ -67,62 +141,7 @@ export default class App extends React.Component {
 }
 
 
-/*	<Route
-		exact
-		path="/topproductsbrand"
-		render={() => (
-			<TopProductsBrand />
-		)}
-	/>
+/*
+QUERIES LEFT:
 
-	<Route
-		exact
-		path="/mostreviewedbrands"
-		render={() => (
-			<MostReviewedBrands />
-		)}
-	/>
-
-
-	<Route
-		exact
-		path="/mostexpensiveproductinbrand"
-		render={() => (
-			<MostExpensiveProductinBrand />
-		)}
-	/>
-	<Route
-		exact
-		path="/brandstats"
-		render={() => (
-			<BrandStats />
-		)}
-	/>
-	<Route
-		exact
-		path="/relatedproducts"
-		render={() => (
-			<RelatedProducts />
-		)}
-	/>
-	<Route
-		exact
-		path="/topreviewers"
-		render={() => (
-			<TopReviewers />
-		)}
-	/>
-	<Route
-		exact
-		path="/topreviewsbyreviewer"
-		render={() => (
-			<TopReviewsByReviewer />
-		)}
-	/> */
-	/*	<Route
-			exact
-			path="/productstats"
-			render={() => (
-				<ProductsStats />
-			)}
-		/> */
+ */

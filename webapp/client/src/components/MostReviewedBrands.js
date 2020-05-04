@@ -36,7 +36,7 @@ export default class MostReviewedBrands extends React.Component {
 	// Hint: Name of movie submitted is contained in `this.state.movieName`.
 	submitProduct() {
 		// Send an HTTP request to the server.
-    fetch("http://localhost:8081/mostreviewedbrands/"+ this.state.productName,
+    fetch("http://localhost:8081/Most reviewed brands/"+ this.state.productName,
     {
       method: 'GET' // The type of HTTP request.
     }).then(res => {
@@ -82,6 +82,7 @@ export default class MostReviewedBrands extends React.Component {
 			    			<button id="submitMovieBtn" className="submit-btn" onClick={this.submitProduct}>Submit</button>
 			    		</div>
 			    		<div className="header-container">
+							<div className="h6">
 							</div>
 								<div className="h6"></div>
 			    			<div className="headers">
@@ -94,8 +95,9 @@ export default class MostReviewedBrands extends React.Component {
 			    			{this.state.productAttrs}
 								</div>
 							</div>
+							</div>
 						</div>
-					</div>
+
 
 		);
 	}

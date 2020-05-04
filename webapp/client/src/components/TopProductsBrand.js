@@ -1,6 +1,6 @@
 import React from 'react';
 import PageNavbar from './PageNavbar';
-import RecommendationsRow from './TopProductsBrandRow';
+import TopProductsBrandRow from './TopProductsBrandRow';
 import '../style/Recommendations.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -35,7 +35,7 @@ export default class TopProductsBrand extends React.Component {
 	// Hint: Name of movie submitted is contained in `this.state.movieName`.
 	submitProduct() {
 		// Send an HTTP request to the server.
-    fetch("http://localhost:8081/topproductsbrand/"+ this.state.productName,
+    fetch("http://localhost:8081/Top products in a brand/"+ this.state.productName,
     {
       method: 'GET' // The type of HTTP request.
     }).then(res => {
@@ -81,6 +81,7 @@ export default class TopProductsBrand extends React.Component {
 			    			<button id="submitMovieBtn" className="submit-btn" onClick={this.submitProduct}>Submit</button>
 			    		</div>
 			    		<div className="header-container">
+							<div className="h6">
 							</div>
 								<div className="h6"></div>
 			    			<div className="headers">
@@ -96,7 +97,8 @@ export default class TopProductsBrand extends React.Component {
 								</div>
 							</div>
 						</div>
-					</div>
+						</div>
+
 
 		);
 	}

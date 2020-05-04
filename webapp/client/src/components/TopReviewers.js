@@ -1,6 +1,6 @@
 import React from 'react';
 import PageNavbar from './PageNavbar';
-import TopReviewersRow from './TopReviewersRow ';
+import TopReviewersRow from './TopReviewersRow';
 
 import '../style/Recommendations.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -36,7 +36,7 @@ export default class TopReviewers extends React.Component {
 	// Hint: Name of movie submitted is contained in `this.state.movieName`.
 	submitProduct() {
 		// Send an HTTP request to the server.
-    fetch("http://localhost:8081/topreviewers/"+ this.state.productName,
+    fetch("http://localhost:8081/Get top reviewers/"+ this.state.productName,
     {
       method: 'GET' // The type of HTTP request.
     }).then(res => {
@@ -80,23 +80,24 @@ export default class TopReviewers extends React.Component {
 			    		<div className="input-container">
 			    			<input type='text' placeholder="" value={this.state.productName} onChange={this.handleProductNameChange} id="productName" className="topreviewers-input"/>
 			    			<button id="submitMovieBtn" className="submit-btn" onClick={this.submitProduct}>Submit</button>
-			    		</div>
-			    		<div className="header-container">
-
-							</div>
-								<div className="h6"></div>
-			    			<div className="headers">
+								</div>
+								<div className="header-container">
+								<div className="h6">
+								</div>
+									<div className="h6"></div>
+									<div className="headers">
 			    				<div className="header"><strong>reviewer name</strong></div>
 			    				<div className="header"><strong>number of reviews written</strong></div>
-					     
+
 			    			</div>
 			    		</div>
 			    		<div className="results-container" id="results">
 			    			{this.state.productAttrs}
 								</div>
+								 			</div>
 							</div>
 						</div>
-					</div>
+
 
 		);
 	}

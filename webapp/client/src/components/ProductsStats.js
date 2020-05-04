@@ -1,13 +1,13 @@
 import React from 'react';
 import PageNavbar from './PageNavbar';
-import RecommendationsRow from './RecommendationsRow';
+import ProductStatsRow from './ProductStatsRow';
 //import ProductsRows from './ProductsRows';
 import '../style/Recommendations.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 
-export default class Products extends React.Component {
+export default class ProductStats extends React.Component {
 
 	constructor(props) {
 
@@ -39,7 +39,7 @@ export default class Products extends React.Component {
 
 
 		//CHANGE THIS
-    fetch("http://localhost:8081/products/"+ this.state.productName,
+    fetch("http://localhost:8081/Product stats/"+ this.state.productName,
     {
       method: 'GET' // The type of HTTP request.
     }).then(res => {
@@ -54,7 +54,7 @@ export default class Products extends React.Component {
       // Map each genreObj in genreList to an HTML element:
       // A button which triggers the showMovies function for each genre.
       let recDivs = recList.map((recObj, i) =>
-      <RecommendationsRow  asin={recObj.asin} title={recObj.title} description={recObj.description} price={recObj.price} brand={recObj.brand}/>
+      <ProductStatsRow  numReviews={recObj.numReviews} rating={recObj.rating} />
       );
 
 
@@ -81,19 +81,17 @@ export default class Products extends React.Component {
 			    		<div className="h5">Product search</div>
 			    		<br></br>
 			    		<div className="input-container">
-			    			<input type='text' placeholder="Enter product name" value={this.state.productName} onChange={this.handleProductNameChange} id="productName" className="product-input"/>
+			    			<input type='text' placeholder="Enter product name" value={this.state.productName} onChange={this.handleProductNameChange} id="productName" className="productstats-input"/>
 			    			<button id="submitMovieBtn" className="submit-btn" onClick={this.submitProduct}>Submit</button>
 			    		</div>
-			    		<div className="header-container">
-			    		<div className="h6">Or <Dropdown title="Other product information" />
+							<div className="header-container">
+			    		<div className="h6">
 							</div>
 								<div className="h6"></div>
 			    			<div className="headers">
-			    				<div className="header"><strong>asin</strong></div>
-			    				<div className="header"><strong>title</strong></div>
-					            <div className="header"><strong>description</strong></div>
-					            <div className="header"><strong>price</strong></div>
-											<div className="header"><strong>brand</strong></div>
+			    				<div className="header"><strong>Number of reviews</strong></div>
+			    				<div className="header"><strong>average rating</strong></div>
+
 			    			</div>
 			    		</div>
 			    		<div className="results-container" id="results">
@@ -102,7 +100,6 @@ export default class Products extends React.Component {
 							</div>
 						</div>
 					</div>
-
 		);
 	}
 }
