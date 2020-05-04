@@ -18,7 +18,7 @@ export default class BrandStats extends React.Component {
 		// State maintained by this React component is the selected movie name,
 		// and the list of recommended movies.
 		this.state = {
-			productName: "",
+			brand: "",
 			productAttrs: []
 		}
 
@@ -28,7 +28,7 @@ export default class BrandStats extends React.Component {
 
 	handleProductNameChange(e) {
 		this.setState({
-			productName: e.target.value
+			brand: e.target.value
 		});
 	}
 
@@ -36,7 +36,7 @@ export default class BrandStats extends React.Component {
 	// Hint: Name of movie submitted is contained in `this.state.movieName`.
 	submitProduct() {
 		// Send an HTTP request to the server.
-    fetch("http://localhost:8081/Average rating and price in a brand/"+ this.state.productName,
+    fetch("http://localhost:8081/Average rating and price in a brand/"+ this.state.brand,
     {
       method: 'GET' // The type of HTTP request.
     }).then(res => {
@@ -78,7 +78,7 @@ export default class BrandStats extends React.Component {
 			    		<div className="h5">Get Brand Stats</div>
 			    		<br></br>
 			    		<div className="input-container">
-			    			<input type='text' placeholder="Enter brand name" value={this.state.productName} onChange={this.handleProductNameChange} id="productName" className="brandstats-input"/>
+			    			<input type='text' placeholder="Enter brand name" value={this.state.brand} onChange={this.handleProductNameChange} id="productName" className="brandstats-input"/>
 			    			<button id="submitMovieBtn" className="submit-btn" onClick={this.submitProduct}>Submit</button>
 								</div>
 								<div className="header-container">

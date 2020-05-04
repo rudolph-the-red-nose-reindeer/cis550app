@@ -303,9 +303,8 @@ async function getLongestReviews(req, res) {
     res.json(result.rows);
   } catch(err) {
      console.log("Error: ", err);
-   } 
-}; 
-
+   }
+};
 
 
 // The exported functions, which can be accessed in index.js.
@@ -313,7 +312,8 @@ module.exports = {
   getAllCategories: getAllCategories,
   getTopProductsInCategory: getTopProductsInCategory,
   getProductInfo: getProductInfo,
-  getReviewerStats: getReviewerStats,  getProductStats: getProductStats,
+  getReviewerStats: getReviewerStats,
+  getProductStats: getProductStats,
   getTopProductsInBrand: getTopProductsInBrand,
   getMostReviewedBrands: getMostReviewedBrands,
   getMostExpensiveProductsInBrand: getMostExpensiveProductsInBrand,
@@ -323,5 +323,12 @@ module.exports = {
   getTopReviewers: getTopReviewers,
   getReviewerTime: getReviewerTime,
   getTopReviewsByReviewer: getTopReviewsByReviewer,
-  getLongestReviews: getLongestReviews
+  getLongestReviews: getLongestReviews,
+  //MAKE SURE THESE ARE ALSO ADDED
+  getMostReviewedProductsInCategory: getMostReviewedProductsInCategory,
+  getMostExpensiveReviewedProductsInCategory: getMostExpensiveReviewedProductsInCategory,
+  getCheapestReviewedProductsInCategory: getCheapestReviewedProductsInCategory,
+  getTopReviewedProductsInCategory: getTopReviewedProductsInCategory,
+  getNewestReviews: getNewestReviews,
+  getRelations:getRelations
 }
