@@ -35,7 +35,7 @@ export default class MostExpensiveProductinBrand extends React.Component {
 	// Hint: Name of movie submitted is contained in `this.state.movieName`.
 	submitProduct() {
 		// Send an HTTP request to the server.
-    fetch("http://localhost:8081/Most expensive products per brand/"+ this.state.productName,
+    fetch("http://localhost:8081/Most%20expensive%20products%20per%20brand/"+ this.state.productName,
     {
       method: 'GET' // The type of HTTP request.
     }).then(res => {

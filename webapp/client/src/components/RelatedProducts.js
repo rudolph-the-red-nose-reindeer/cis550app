@@ -35,7 +35,7 @@ export default class RelatedProducts extends React.Component {
 	// Hint: Name of movie submitted is contained in `this.state.movieName`.
 	submitProduct() {
 		// Send an HTTP request to the server.
-    fetch("http://localhost:8081/Get related products/"+ this.state.productName,
+    fetch("http://localhost:8081/Get%20related%20products/"+ this.state.productName,
     {
       method: 'GET' // The type of HTTP request.
     }).then(res => {

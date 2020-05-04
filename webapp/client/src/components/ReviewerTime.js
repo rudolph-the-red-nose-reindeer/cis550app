@@ -37,7 +37,7 @@ export default class ReviewerTime extends React.Component {
 	// Hint: Name of movie submitted is contained in `this.state.movieName`.
 	submitProduct() {
 		// Send an HTTP request to the server.
-    fetch("http://localhost:8081/time spent writing/"+ this.state.productName,
+    fetch("http://localhost:8081//time%20spent%20writing/"+ this.state.productName,
     {
       method: 'GET' // The type of HTTP request.
     }).then(res => {

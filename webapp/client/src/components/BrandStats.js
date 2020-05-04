@@ -36,7 +36,7 @@ export default class BrandStats extends React.Component {
 	// Hint: Name of movie submitted is contained in `this.state.movieName`.
 	submitProduct() {
 		// Send an HTTP request to the server.
-    fetch("http://localhost:8081/Average rating and price in a brand/"+ this.state.brand,
+    fetch("http://localhost:8081/Average%20rating%20and%20price%20in%20a%20brand/"+ this.state.brand,
     {
       method: 'GET' // The type of HTTP request.
     }).then(res => {

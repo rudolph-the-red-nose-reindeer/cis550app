@@ -25,19 +25,19 @@ app.get('/categories/:category', routes.getTopProductsInCategory);
 /* ---- (Products) ---- */
 app.get('/products/:product', routes.getProductInfo);
 app.get('/Product%20stats/:product', routes.getProductStats);
-app.get('/products', routes.getTopProductsInBrand);
-app.get('/products', routes.getMostReviewedBrands);
-app.get('/products', routes.getMostExpensiveProductsInBrand);
-app.get('/products', routes.getBrandStats);
+app.get('/Top%20products%20in%20a%20brand/:product', routes.getTopProductsInBrand);
+app.get('/Most%20reviewed%20brands/:product', routes.getMostReviewedBrands);
+app.get('/Most%20expensive%20products%20per%20brand/:product', routes.getMostExpensiveProductsInBrand);
+app.get('/Average%20rating%20and%20price%20in%20a%20brand/:product', routes.getBrandStats);
 app.get('/products', routes.getRelations);
-app.get('/products', routes.getRelated);
+app.get('/Get%20related%20products/:product', routes.getRelated);
 
 /* ---- (Reviewers) ---- */
 //app.get('/reviewers', routes.getTopReviewers);
 app.get('/reviewers/:reviewer', routes.getReviewerStats);
-app.get('/reviewers', routes.getTopReviewers);
-app.get('/reviewers/:reviewer', routes.getReviewerTime);
-app.get('/reviewers/:reviewer', routes.getTopReviewsByReviewer);
+app.get('/Get%20top%20reviewers/:reviewer', routes.getTopReviewers);
+app.get('/time%20spent%20writing/:reviewer', routes.getReviewerTime);
+app.get('/Top%20products%20a%20reviewer%20has%20reviewed/:reviewer', routes.getTopReviewsByReviewer);
 
 /* ---- (Reviews) ---- */
 app.get('/reviews/:title', routes.getLongestReviews);

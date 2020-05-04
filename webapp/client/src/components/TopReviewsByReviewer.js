@@ -35,7 +35,7 @@ export default class TopReviewsByReviewer extends React.Component {
 	// Hint: Name of movie submitted is contained in `this.state.movieName`.
 	submitProduct() {
 		// Send an HTTP request to the server.
-    fetch("http://localhost:8081/Top products a reviewer has reviewed/"+ this.state.productName,
+    fetch("http://localhost:8081/Top%20products%20a%20reviewer%20has%20reviewed/"+ this.state.productName,
     {
       method: 'GET' // The type of HTTP request.
     }).then(res => {
