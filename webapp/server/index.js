@@ -41,7 +41,7 @@ app.get('/reviewers/:reviewer', routes.getTopReviewsByReviewer);
 
 /* ---- (Reviews) ---- */
 app.get('/reviews/:title', routes.getLongestReviews);
-//app.get('/reviews', routes.getNewestReviews);
+app.get('/reviews', routes.getNewestReviews);
 
 
 

@@ -80,6 +80,10 @@ export default class RelatedProducts extends React.Component {
 			    			<input type='text' placeholder="Enter product name" value={this.state.productName} onChange={this.handleProductNameChange} id="productName" className="relatedproducts-input"/>
 			    			<button id="submitMovieBtn" className="submit-btn" onClick={this.submitProduct}>Submit</button>
 								</div>
+								<div className="input-container">
+									<input type='text' placeholder="Enter product label" value={this.state.productName} onChange={this.handleProductNameChange} id="productName" className="relatedproducts-input"/>
+									<button id="submitMovieBtn" className="submit-btn" onClick={this.submitProduct}>Submit</button>
+									</div>
 				    		<div className="header-container">
 				    		<div className="h6">
 								</div>
