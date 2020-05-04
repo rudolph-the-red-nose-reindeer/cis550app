@@ -1,8 +1,8 @@
 import React from 'react';
 import PageNavbar from './PageNavbar';
 import ProductStatsRow from './ProductStatsRow';
-//import ProductsRows from './ProductsRows';
 import '../style/Recommendations.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
@@ -39,7 +39,7 @@ export default class ProductStats extends React.Component {
 
 
 		//CHANGE THIS
-    fetch("http://localhost:8081/Product stats/"+ this.state.productName,
+    fetch("http://localhost:8081/Product%20stats/"+ this.state.productName,
     {
       method: 'GET' // The type of HTTP request.
     }).then(res => {
@@ -49,13 +49,19 @@ export default class ProductStats extends React.Component {
       // Print the error if there is one.
       console.log(err);
     }).then(recList => {
-      if (!recList) return;
+	  
+	  if (!recList) return;
+	  console.log(recList);
+	  
 
       // Map each genreObj in genreList to an HTML element:
       // A button which triggers the showMovies function for each genre.
       let recDivs = recList.map((recObj, i) =>
-      <ProductStatsRow  numReviews={recObj.numReviews} rating={recObj.rating} />
-      );
+		<tr>
+			<td>{recObj.NUMREVIEWS}</td>
+			<td>{recObj.RATING}</td>
+	  	</tr>      
+	  );
 
 
 
@@ -74,29 +80,33 @@ export default class ProductStats extends React.Component {
 
 		return (
 			<div className="Products">
+				<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"></link>
+  				<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  				<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
 				<PageNavbar active="products" />
 
 			    <div className="container products-container">
 			    	<div className="jumbotron">
-			    		<div className="h5">Product search</div>
+			    		<div className="h5">Product Stats</div>
 			    		<br></br>
 			    		<div className="input-container">
-			    			<input type='text' placeholder="Enter product name" value={this.state.productName} onChange={this.handleProductNameChange} id="productName" className="productstats-input"/>
+			    			<input type='text' placeholder="Enter Product name" value={this.state.productName} onChange={this.handleProductNameChange} id="productName" className="productstats-input"/>
 			    			<button id="submitMovieBtn" className="submit-btn" onClick={this.submitProduct}>Submit</button>
 			    		</div>
-							<div className="header-container">
-			    		<div className="h6">
-							</div>
-								<div className="h6"></div>
-			    			<div className="headers">
-			    				<div className="header"><strong>Number of reviews</strong></div>
-			    				<div className="header"><strong>average rating</strong></div>
-
-			    			</div>
+						<div class="container">
+						<table class="table table-striped">
+							<thead>
+							<tr>
+								<th>Number of Reviews</th>
+								<th>Rating</th>
+							</tr>
+							</thead>
+							<tbody>
+								{this.state.productAttrs}
+							</tbody>
+						</table>
 			    		</div>
-			    		<div className="results-container" id="results">
-			    			{this.state.productAttrs}
-								</div>
 							</div>
 						</div>
 					</div>

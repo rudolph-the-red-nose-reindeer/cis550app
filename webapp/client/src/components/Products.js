@@ -34,8 +34,8 @@ export default class Products extends React.Component {
 		});
 	}
 
-	/* ---- Q2 (Recommendations) ---- */
-	// Hint: Name of movie submitted is contained in `this.state.movieName`.
+	
+	// Submit product functionality
 	submitProduct() {
 		// Send an HTTP request to the server.
     fetch("http://localhost:8081/products/"+ this.state.productName,
@@ -53,7 +53,14 @@ export default class Products extends React.Component {
       // Map each genreObj in genreList to an HTML element:
       // A button which triggers the showMovies function for each genre.
       let recDivs = recList.map((recObj, i) =>
-      <RecommendationsRow  asin={recObj.asin} title={recObj.title} description={recObj.description} price={recObj.price} brand={recObj.brand}/>
+      	<tr>
+			<td>{recObj.NAME}</td>
+			<td>{recObj.DESCRIPTION}</td>
+			<td>{recObj.BRAND}</td>
+			<td>{recObj.REVIEWTEXT}</td>
+			<td>{recObj.OVERALL}</td>
+			<td>{recObj.REVIEWDATE}</td>
+	  	</tr> 
       );
 
 
@@ -83,24 +90,30 @@ export default class Products extends React.Component {
 			    			<input type='text' placeholder="Enter product name" value={this.state.productName} onChange={this.handleProductNameChange} id="productName" className="product-input"/>
 			    			<button id="submitMovieBtn" className="submit-btn" onClick={this.submitProduct}>Submit</button>
 			    		</div>
-			    		<div className="header-container">
-			    		<div className="h6">Or <Dropdown title="Other product information" />
+						
+			    		
+						<div class="container">
+						<div className="h6">Or <Dropdown title="Other product information" />
 							</div>
-								<div className="h6"></div>
-			    			<div className="headers">
-			    				<div className="header"><strong>asin</strong></div>
-			    				<div className="header"><strong>title</strong></div>
-					            <div className="header"><strong>description</strong></div>
-					            <div className="header"><strong>price</strong></div>
-											<div className="header"><strong>brand</strong></div>
-			    			</div>
+							<table class="table table-striped">
+								<thead>
+								<tr>
+									<th>Name</th>
+									<th>Description</th>
+									<th>Brand</th>
+									<th>Review</th>
+									<th>Rating</th>
+									<th>Date</th>
+								</tr>
+								</thead>
+								<tbody>
+									{this.state.productAttrs}
+								</tbody>
+							</table>
 			    		</div>
-			    		<div className="results-container" id="results">
-			    			{this.state.productAttrs}
-								</div>
-							</div>
-						</div>
 					</div>
+				</div>
+			</div>
 
 		);
 	}

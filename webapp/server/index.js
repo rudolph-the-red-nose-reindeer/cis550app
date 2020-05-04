@@ -23,8 +23,8 @@ app.get('/categories/:category', routes.getTopProductsInCategory);
 //app.get('/reviews', routes.getLongestReviews);
 
 /* ---- (Products) ---- */
-app.get('/products', routes.getProductInfo);
-app.get('/products', routes.getProductStats);
+app.get('/products/:product', routes.getProductInfo);
+app.get('/Product%20stats/:product', routes.getProductStats);
 app.get('/products', routes.getTopProductsInBrand);
 app.get('/products', routes.getMostReviewedBrands);
 app.get('/products', routes.getMostExpensiveProductsInBrand);
@@ -41,7 +41,7 @@ app.get('/reviewers/:reviewer', routes.getTopReviewsByReviewer);
 
 /* ---- (Reviews) ---- */
 app.get('/reviews/:title', routes.getLongestReviews);
-app.get('/reviews', routes.getNewestReviews);
+//app.get('/reviews', routes.getNewestReviews);
 
 
 
