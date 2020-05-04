@@ -55,8 +55,8 @@ function Dropdown1({ title, multiSelect = false }) {
            <li className="dd-list-item" key={item.id}>
              <button type="button" onClick={() => handleOnClick(item)}>
                <span>{item.value}</span>
-               //need to add paths for pages and link them properly
-               <span>{isItemInSelection(item) && <a  href={"/" + item}>{item.charAt(0).toUpperCase() + item.substring(1, item.length)}</a>}</span>
+               <span>{isItemInSelection(item) && <a  href={"/" + item.value}>{item.value.charAt(0).toUpperCase() + item.value.substring(1, item.value.length)}</a>}</span>
+
              </button>
            </li>
          ))}

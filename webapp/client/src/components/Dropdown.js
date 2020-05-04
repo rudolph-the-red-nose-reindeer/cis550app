@@ -11,7 +11,7 @@ function Dropdown({ title, multiSelect = false }) {
   const items = [
   	{id: 1, value:'Product stats'},{id:2, value:'Top products in a brand' },{id: 3, value:'Most reviewed brands' },
   	{id: 4, value:'Most expensive products per brand'},{id: 5, value:'Average rating and price in a brand'},
-  	{id: 6, value:'Get related products'},
+  	{id: 6, value:'Get related products'}, {id: 7, value: 'Get product labels'},
   ];
   Dropdown.handleClickOutside = () => setOpen(false);
 
@@ -39,7 +39,7 @@ function Dropdown({ title, multiSelect = false }) {
     }
     return false;
   }
-
+console.log(items)
   return (
     <div className="dd-wrapper">
       <div
@@ -62,8 +62,8 @@ function Dropdown({ title, multiSelect = false }) {
             <li className="dd-list-item" key={item.id}>
               <button type="button" onClick={() => handleOnClick(item)}>
                 <span>{item.value}</span>
-                //need to add paths to pages and link them properly
-                <span>{isItemInSelection(item) && <a  href={"/" + item}>{item.charAt(0).toUpperCase() + item.substring(1, item.length)}</a>}</span>
+
+                <span>{isItemInSelection(item) && <a  href={"/" + item.value}>{item.value.charAt(0).toUpperCase() + item.value.substring(1, item.value.length)}</a>}</span>
               </button>
             </li>
           ))}

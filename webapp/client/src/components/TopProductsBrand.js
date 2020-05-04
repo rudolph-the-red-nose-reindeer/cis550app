@@ -1,8 +1,9 @@
 import React from 'react';
 import PageNavbar from './PageNavbar';
-import RecommendationsRow from './TopProductsBrandRow';
+import TopProductsBrandRow from './TopProductsBrandRow';
 import '../style/Recommendations.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Dropdown from './Dropdown';
 
 
 
@@ -35,7 +36,7 @@ export default class TopProductsBrand extends React.Component {
 	// Hint: Name of movie submitted is contained in `this.state.movieName`.
 	submitProduct() {
 		// Send an HTTP request to the server.
-    fetch("http://localhost:8081/topproductsbrand/"+ this.state.productName,
+    fetch("http://localhost:8081/Top%20products%20in%20a%20brand/"+ this.state.productName,
     {
       method: 'GET' // The type of HTTP request.
     }).then(res => {
@@ -50,7 +51,11 @@ export default class TopProductsBrand extends React.Component {
       // Map each genreObj in genreList to an HTML element:
       // A button which triggers the showMovies function for each genre.
       let recDivs = recList.map((recObj, i) =>
-      <TopProductsBrandRow  title={recObj.title} description={recObj.description} price={recObj.price} averageRating={recObj.averageRating} />
+      	<tr>
+			<td>{recObj.TITLE}</td>
+			<td>{recObj.DESCRIPTION}</td>
+			<td>{recObj.RATING}</td>
+	  	</tr>
       );
 
 
@@ -77,26 +82,29 @@ export default class TopProductsBrand extends React.Component {
 			    		<div className="h5">Find top products for a brand</div>
 			    		<br></br>
 			    		<div className="input-container">
-			    			<input type='text' placeholder="Enter product name" value={this.state.productName} onChange={this.handleProductNameChange} id="productName" className="topinbrand-input"/>
+			    			<input type='text' placeholder="Enter brand name" value={this.state.productName} onChange={this.handleProductNameChange} id="productName" className="topinbrand-input"/>
 			    			<button id="submitMovieBtn" className="submit-btn" onClick={this.submitProduct}>Submit</button>
 			    		</div>
-			    		<div className="header-container">
+			    		<div class="container">
+						<div className="h6">Or <Dropdown title="Other product information" />
 							</div>
-								<div className="h6"></div>
-			    			<div className="headers">
-			    				<div className="header"><strong>title</strong></div>
-			    				<div className="header"><strong>description</strong></div>
-					            <div className="header"><strong>price</strong></div>
-					            <div className="header"><strong>averageRating</strong></div>
-											<div className="header"><strong>brand</strong></div>
-			    			</div>
+							<table class="table table-striped">
+								<thead>
+								<tr>
+									<th>Name</th>
+									<th>Description</th>
+									<th>Rating</th>
+								</tr>
+								</thead>
+								<tbody>
+									{this.state.productAttrs}
+								</tbody>
+							</table>
 			    		</div>
-			    		<div className="results-container" id="results">
-			    			{this.state.productAttrs}
-								</div>
-							</div>
-						</div>
 					</div>
+				</div>
+			</div>
+
 
 		);
 	}

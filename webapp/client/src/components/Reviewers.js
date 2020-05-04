@@ -1,13 +1,10 @@
 import React from 'react';
 import PageNavbar from './PageNavbar';
-import ReviewersRow from './ReviewersRow';
 import './App.scss';
 import Dropdown1 from './Dropdown1';
 import '../style/Recommendations.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-/*eslint no-undef: "error"*/
-/*eslint-env node*/
 
 
 
@@ -51,7 +48,11 @@ export default class Reviewers extends React.Component {
       // Map each genreObj in genreList to an HTML element:
       // A button which triggers the showMovies function for each genre.
       let recDivs = recList.map((recObj, i) =>
-      <ReviewersRow  Name={recObj.Name} numReviews={recObj.numReviews} avgRating={recObj.avgRating} />
+      	<tr>
+			<td>{recObj.NAME}</td>
+			<td>{recObj.NUMREVIEWS}</td>
+			<td>{recObj.AVGRATING}</td>
+	  	</tr> 
       );
 
 
@@ -81,23 +82,24 @@ export default class Reviewers extends React.Component {
 			    			<input type='text' placeholder="Enter Reviewer Name" value={this.state.reviewerName} onChange={this.handleReviewerChange} id="reviewerName" className="reviewer-input"/>
 			    			<button id="submitMovieBtn" className="submit-btn" onClick={this.submitReviewer}>Submit</button>
 			    		</div>
-			    		<div className="header-container">
-							<div className="h6">Or <Dropdown1 title="Other Reviewer information" />
-							</div>
-			    			<div className="h6"></div>
-			    			<div className="headers">
-			    				<div className="header"><strong>Name</strong></div>
-			    				<div className="header"><strong>NumReviews</strong></div>
-					            <div className="header"><strong>avgRating</strong></div>
-
-			    			</div>
+			    		<div class="container">
+						<div className="h6">Or <Dropdown1 title="Other reviewer information" /></div>
+						<table class="table table-striped">
+							<thead>
+							<tr>
+								<th>Name</th>
+								<th>Number of Reviews</th>
+								<th>Average Rating</th>
+							</tr>
+							</thead>
+							<tbody>
+								{this.state.ReviewerAttrs}
+							</tbody>
+						</table>
 			    		</div>
-			    		<div className="results-container" id="results">
-			    			{this.state.ReviewerAttrs}
-								</div>
-							</div>
-						</div>
 					</div>
+				</div>
+			</div>
 
 		);
 	}

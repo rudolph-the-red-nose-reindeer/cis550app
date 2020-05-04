@@ -36,40 +36,54 @@ function converter(input) {
 
   // use jsonfile module to read json file
   jsonfile.readFile(jsonFilename, (err, data) => {
-    if (err) return console.error(err);
+    if (err) return console.error("We have an error" + err);
 
     const source = data;
     //fetchReviewerData(source);
     //fetchReviewData(source);
     //fetchProductData(source);
-    fetchCategoriesData(source);
-    //fetchRelatedData(source)
+    // fetchCategoriesData(source);
+    fetchRelatedData(source)
     const inserts = toSql(valueInserts);
+    //const inserts = toCsv(valueInserts);
     writeOutput(inserts)
   });
 
   function fetchProductData(source) {
+    var t = 0;
     for (var i in source) {
+      t++;
       let temp = source[i];
       if (temp["reviewerID"]) break;
       var asin = `'${temp["asin"]}'`;
       var title = temp["title"] ? `${cleanText(temp["title"])}` : null;
       var tempDescription = temp["description"] ? fetchDescription(temp["description"]) : null;
       var description = tempDescription ? `${cleanText(tempDescription)}` : null;
-      var price = temp["price"] ? temp["price"] : null;
+      var price = temp["price"] ? cleanPriceText(temp["price"]) : null;
       var brand = temp["brand"] ? `${cleanText(temp["brand"])}` : null;
-
+      if (t === 5000) {
+        valueInserts.push(`COMMIT`)
+        t = 0;
+      }
       const query = `INSERT INTO Product (asin, title, description, price, brand) 
       VALUES (${asin}, ${title}, ${description}, ${price}, ${brand})`;
       valueInserts.push(query);
     }
   }
 
+
+
   function fetchRelatedData(source) {
+    var t = 0;
     for (var i in source) {
+      t++;
+      if (t === 5000) {
+        valueInserts.push(`COMMIT`)
+        t = 0;
+      }
       let temp = source[i];
       if (temp["reviewerID"]) break;
-      var asin = `"${temp["asin"]}"`;
+      var asin = `'${temp["asin"]}'`;
 
       if (temp["also_bought"]) alsoBoughtData(temp["also_bought"], asin)
       if (temp["also_buy"]) alsoBoughtData(temp["also_buy"], asin)
@@ -82,36 +96,36 @@ function converter(input) {
 
   function alsoBoughtData(arr, asin) {
     for (var product in arr) {
-      var bought_asin = `"${arr[product]}"`
+      var bought_asin = `'${arr[product]}'`
       const query = `INSERT INTO Related (asin, asinRelated, label) 
-          VALUES (${asin}, ${bought_asin}, "also bought")`;
+          VALUES (${asin}, ${bought_asin}, 'also bought')`;
       valueInserts.push(query);
     }
   }
 
   function alsoViewedData(arr, asin) {
     for (var product in arr) {
-      var bought_asin = `"${arr[product]}"`
+      var bought_asin = `'${arr[product]}'`
       const query = `INSERT INTO Related (asin, asinRelated, label) 
-          VALUES (${asin}, ${bought_asin}, "also viewed")`;
+          VALUES (${asin}, ${bought_asin}, 'also viewed')`;
       valueInserts.push(query);
     }
   }
 
   function boughtTogetherData(arr, asin) {
     for (var product in arr) {
-      var bought_asin = `"${arr[product]}"`
+      var bought_asin = `'${arr[product]}'`
       const query = `INSERT INTO Related (asin, asinRelated, label) 
-          VALUES (${asin}, ${bought_asin}, "bought together")`;
+          VALUES (${asin}, ${bought_asin}, 'bought together')`;
       valueInserts.push(query);
     }
   }
 
   function buyAfterViewingData(arr, asin) {
     for (var product in arr) {
-      var bought_asin = `"${arr[product]}"`
+      var bought_asin = `'${arr[product]}'`
       const query = `INSERT INTO Related (asin, asinRelated, label) 
-          VALUES (${asin}, ${bought_asin}, "buy after viewing")`;
+          VALUES (${asin}, ${bought_asin}, 'buy after viewing')`;
       valueInserts.push(query);
     }
   }
@@ -131,7 +145,13 @@ function converter(input) {
   }
 
   function fetchReviewData(source) {
+    var t = 0;
     for (var i in source) {
+      t++;
+      if (t === 5000) {
+        valueInserts.push(`COMMIT`)
+        t = 0;
+      }
       let temp = source[i];
       //console.log("this is example obj: " + JSON.stringify(temp));
       if (!temp["reviewerID"]) break;
@@ -148,7 +168,15 @@ function converter(input) {
   }
 
   function fetchCategoriesData(source) {
+    // const header = `CATEGORY, ASIN`;
+    //valueInserts.push(header);
+    var t = 0;
     for (var i in source) {
+      t++;
+      if (t === 5000) {
+        valueInserts.push(`COMMIT`)
+        t = 0;
+      }
       let temp = source[i];
       if (temp["reviewerID"]) break;
       var asin = `'${temp["asin"]}'`
@@ -157,6 +185,7 @@ function converter(input) {
           var arr = temp["categories"]
           var txt = arr[cat]
           const query = `INSERT INTO Category (category, asin) VALUES ('${txt}', ${asin})`;
+          // const query = `'${txt}', ${asin}`;
           valueInserts.push(query);
         }
       }
@@ -166,12 +195,14 @@ function converter(input) {
           var arr = temp["category"]
           var txt = arr[cat]
           const query = `INSERT INTO Category (category, asin) VALUES ('${txt}', ${asin})`;
+          //const query = `'${txt}', ${asin}`;
           valueInserts.push(query);
         }
       }
 
       else if (temp["main_cat"]) {
         const query = `INSERT INTO Category (category, asin) VALUES ('${temp["main_cat"]}', ${asin})`;
+        //const query = `'${temp["main_cat"]}', ${asin}`;
         valueInserts.push(query);
       }
     }
@@ -199,6 +230,11 @@ function converter(input) {
     return two;
   }
 
+  function cleanPriceText(price) {
+    let newPrice = price.slice(1)
+    return newPrice;
+  }
+
   function replaceAt(index, str, chr) {
     if (index > str.length - 1) return str;
     return str.substr(0, index) + chr + str.substr(index + 1);
@@ -206,6 +242,10 @@ function converter(input) {
 
   function toSql(queries) {
     return queries.join(`;\n`) + ';';
+  }
+
+  function toCsv(queries) {
+    return queries.join(`\n`);
   }
 
   function writeOutput(combinedSql) {
