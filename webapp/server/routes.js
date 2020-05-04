@@ -266,13 +266,13 @@ async function getReviewerTime(req, res) {
 
     //Gets the top products that a reviewer has reviewed (productName, rating, review, time)
 async function getTopReviewsByReviewer(req, res) {
-  var inputName = req.params.name;
+  var inputName = req.params.reviewer;
   var query = `
-    SELECT * FROM(
+  SELECT * FROM(
     SELECT P.title AS productName, R.Overall AS rating, R.reviewText AS review, R.time AS time
     FROM Review R JOIN Product P ON R.Asin = P.Asin JOIN Reviewer RE ON R.reviewerID = RE.reviewerID
     WHERE RE.name = '` + inputName + `'
-    ORDER BY R.Overall DESC) WHERE rownum <= 10
+    ORDER BY R.Overall DESC, P.title) WHERE rownum <= 10
   `;
   try{
     console.log("Successfully connected to Oracle!")
@@ -283,6 +283,7 @@ async function getTopReviewsByReviewer(req, res) {
      console.log("Error: ", err);
   }
 };
+
 
 
 
