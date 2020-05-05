@@ -43,7 +43,7 @@ export default class RelatedProducts extends React.Component {
 	// Hint: Name of movie submitted is contained in `this.state.movieName`.
 	submitProduct() {
 		// Send an HTTP request to the server.
-    fetch("http://localhost:8081/Get%20related%20products/"+ this.state.productNametitle + this.state.productNamerelation,
+    fetch("http://localhost:8081/Get%20related%20products/"+ this.state.productNametitle +"/"+this.state.productNamerelation,
     {
       method: 'GET' // The type of HTTP request.
     }).then(res => {
@@ -58,7 +58,12 @@ export default class RelatedProducts extends React.Component {
       // Map each genreObj in genreList to an HTML element:
       // A button which triggers the showMovies function for each genre.
       let recDivs = recList.map((recObj, i) =>
-      <RelatedProductsRow   title={recObj.title} Description={recObj.Description} price={recObj.price} aveRating={recObj.aveRating}/>
+      	<tr>
+			<td>{recObj.TITLE}</td>
+			<td>{recObj.DESCRIPTION}</td>
+			<td>{recObj.PRICE}</td>
+			<td>{recObj.AVERATINGS}</td>
+	  	</tr>
       );
 
 
@@ -90,20 +95,22 @@ export default class RelatedProducts extends React.Component {
 									<input type='text' placeholder="Enter product label" value={this.state.productNamerelation} onChange={this.handleProductNameChange1} id="productNamerelation" className="relatedproducts-input"/>
 									<button id="submitMovieBtn" className="submit-btn" onClick={this.submitProduct}>Submit</button>
 									</div>
-				    		<div className="header-container">
-				    		<div className="h6">
-								</div>
-									<div className="h6"></div>
-				    			<div className="headers">
-			    				<div className="header"><strong>name</strong></div>
-					            <div className="header"><strong>description</strong></div>
-					            <div className="header"><strong>price</strong></div>
-											<div className="header"><strong>average rating</strong></div>
-			    			</div>
+									<div class="container">
+						<div className="h6">Or <Dropdown title="Other reviewer information" /></div>
+						<table class="table table-striped">
+							<thead>
+							<tr>
+								<th>Product Name</th>
+								<th>Description</th>
+								<th>Price</th>
+								<th>Average Ratings</th>
+							</tr>
+							</thead>
+							<tbody>
+								{this.state.productAttrs}
+							</tbody>
+						</table>
 			    		</div>
-			    		<div className="results-container" id="results">
-			    			{this.state.productAttrs}
-								</div>
 								</div>
 							</div>
 						</div>

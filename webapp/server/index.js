@@ -17,7 +17,6 @@ app.use(bodyParser.urlencoded({extended: false}));
 
 
 /* ---- (Dashboard) ---- */
-<<<<<<< HEAD
 app.get('/categories', routes.getAllCategories);
 app.get('/categories/:category', routes.getTopProductsInCategory);
 //app.get('/categories/:category', routes.getCheapestReviewedProductsInCategory);
@@ -34,7 +33,7 @@ app.get('/Most%20reviewed%20brands/', routes.getMostReviewedBrands);
 app.get('/Most%20expensive%20products%20per%20brand/:brand', routes.getMostExpensiveProductsInBrand);
 app.get('/Average%20rating%20and%20price%20in%20a%20brand/:brand', routes.getBrandStats);
 app.get('/Get%20product%20labels', routes.getRelations);
-app.get('/Get%20related%20products/:product', routes.getRelated);
+app.get('/Get%20related%20products/:title/:relation', routes.getRelated);
 
 /* ---- (Reviewers) ---- */
 //app.get('/reviewers', routes.getTopReviewers);
@@ -46,45 +45,6 @@ app.get('/Top%20products%20a%20reviewer%20has%20reviewed/:reviewer', routes.getT
 /* ---- (Reviews) ---- */
 app.get('/reviews/:title', routes.getLongestReviews);
 //app.get('/reviews', routes.getNewestReviews);
-=======
-// The route localhost:8081/genres is registered to the function
-// routes.getAllGenres, specified in routes.js.
-app.get('/genres', routes.getAllGenres);
-
-
-
-
-
-
-/* ---- Q1b (Dashboard) ---- */
-app.get('/genres/:genre', routes.getTopInGenre); // Hint: Replace () => {} with the appropriate route handler.
-
-
-
-
-
-
-
-
-/* ---- Q2 (Recommendations) ---- */
-app.get('/recommendations/:rec', routes.getRecs);
-
-
-
-
-
-/* ---- (Best Genre) ---- */
-app.get('/decades', routes.getDecades);
-
-
-
-
-
-
-/* ---- Q3b (Best Genre) ---- */
-app.get('/bestgenres/:decade', routes.bestGenresPerDecade);
-
->>>>>>> parent of e337be7... Merging
 
 app.get('/products/:info', routes.getProductInfo);
 //need to change reccomendations... to productinfo

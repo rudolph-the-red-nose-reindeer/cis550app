@@ -46,8 +46,7 @@ export default class Reviews extends React.Component {
 	  <tr>
 		<td>{recObj.REVIEWERNAME}</td>
         <td>{recObj.RATING}</td>
-        <td>{recObj.REVIEW}</td>
-		<td>{recObj.TIME}</td>
+        <td>{recObj.REVIEW}</td> 
       </tr>
 
       );
@@ -93,7 +92,6 @@ export default class Reviews extends React.Component {
 								<th>Name</th>
 								<th>Rating</th>
 								<th>Review</th>
-								<th>Time</th>
 							</tr>
 							</thead>
 							<tbody>

@@ -200,7 +200,9 @@ async function getRelations(req, res) {
 //Gets the title, description, price, and average rating for a given title
 async function getRelated(req, res) {
   var inputTitle = req.params.title;
+  console.log(inputTitle);
   var inputLabel = req.params.relation;
+  console.log(inputLabel);
   var query = `
     SELECT * FROM(
     SELECT PR.title, PR.Description, PR.price, AVG(RE.Overall) AS aveRatings
